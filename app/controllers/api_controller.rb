@@ -2,6 +2,7 @@ class ApiController < ApplicationController
   def craft
     recipe = find_or_create_recipe
     if recipe.status_active?
+      current_user.discover(recipe) if current_user.present?
       own_discovery = (recipe.result&.discovered_uuid == params[:uuid] || recipe.result&.discovered_by == current_user)
       return render "elements/show", locals: { element: recipe.result, own_discovery: own_discovery }
     end

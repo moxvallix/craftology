@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_06_055445) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_06_145127) do
+  create_table "discoveries", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "element_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["element_id"], name: "index_discoveries_on_element_id"
+    t.index ["user_id"], name: "index_discoveries_on_user_id"
+  end
+
+  create_table "discovery_recipes", force: :cascade do |t|
+    t.integer "discovery_id", null: false
+    t.integer "recipe_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discovery_id"], name: "index_discovery_recipes_on_discovery_id"
+    t.index ["recipe_id"], name: "index_discovery_recipes_on_recipe_id"
+  end
+
   create_table "elements", force: :cascade do |t|
     t.string "name"
     t.string "icon"
@@ -52,6 +70,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_055445) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "discoveries", "elements"
+  add_foreign_key "discoveries", "users"
+  add_foreign_key "discovery_recipes", "discoveries"
+  add_foreign_key "discovery_recipes", "recipes"
   add_foreign_key "elements", "users", column: "discovered_by_id"
   add_foreign_key "recipes", "elements", column: "left_element_id"
   add_foreign_key "recipes", "elements", column: "result_id"
