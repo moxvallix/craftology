@@ -1,0 +1,23 @@
+<div class="flex grow">
+  <div class="grow sticky top-0 h-full max-h-screen">
+    <div id="playspace" class="bg-gray-200 h-full">
+      <h1 class="text-2xl p-2">Craftology</h1>
+
+    </div>
+  </div>
+  <div id="trash" class="overflow-auto basis-1/6 p-2">
+    <div id="inventory" class=" flex flex-wrap items-start justify-start gap-2">
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import {Craftology} from "<%= asset_path("custom/game") %>"
+  let playspace = document.getElementById("playspace")
+  let inventory = document.getElementById("inventory")
+  let trash = document.getElementById("trash")
+  let elements = <%== Element.default_list %>
+
+  let game = new Craftology({playspace: playspace, library: inventory, trash: trash, elements: elements})
+  console.log(elements)
+</script>

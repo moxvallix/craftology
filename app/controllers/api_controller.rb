@@ -2,10 +2,9 @@ class ApiController < ApplicationController
   def craft
     recipe = find_or_create_recipe
     return render "elements/show", locals: { element: recipe.result } if recipe.status_active?
-
-    if recipe.status_scheduled?
-      CraftNewElementJob.perform_later(recipe)
-    end
+    return render "elements/error" if recipe.status_failed?
+    
+    CraftNewElementJob.perform_later(recipe) if recipe.status_scheduled?
 
     render "elements/pending"
   end

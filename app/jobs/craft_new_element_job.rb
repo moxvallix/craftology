@@ -18,25 +18,19 @@ class CraftNewElementJob < ApplicationJob
       content = response_json["content"].split("\n").first
       puts content
       element_data = JSON.parse(content).symbolize_keys
-    rescue JSON::ParserError
-      return set_error_recipe(recipe)
     end
 
     recipe.reload
     return unless recipe.status_pending?
 
-    return set_error_recipe(recipe) unless element_data[:result].is_a? String
-    return set_error_recipe(recipe) unless element_data[:emoji].is_a? String
-    return set_error_recipe(recipe) unless element_data[:description].is_a? String
+    raise "Missing result!" unless element_data[:result].is_a? String
+    return "Missing icon!" unless element_data[:emoji].is_a? String
+    return "Missing description!" unless element_data[:description].is_a? String
 
     set_recipe(recipe, element_data)
   rescue => e
-    Rails.logger.error("Failed to craft recipe: ", + e.message)
+    Rails.logger.error("Failed to craft recipe: " + e.message)
     recipe.update(status: :failed)
-  end
-
-  def set_error_recipe(recipe)
-    set_recipe(recipe, {result: "error"})
   end
 
   def set_recipe(recipe, data)
