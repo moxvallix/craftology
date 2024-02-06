@@ -71,7 +71,7 @@ export class Craftology {
         class: "absolute bottom-4 right-4 select-none cursor-pointer rounded-lg border border-gray-400 p-2 px-4 bg-white",
         title: "Delete element. Double-click to wipe board."
       },
-      span({class: "pointer-events-none"}, "🗑️")
+      span({class: "pointer-events-none font-emoji"}, "🗑️")
     )
     
     output.addEventListener("dragenter", event => {
@@ -125,7 +125,7 @@ export class Craftology {
         title: data.description, draggable: true,
         "data-type": data?.type, "data-name": data.name
       },
-      span({class: "pointer-events-none"}, data.icon),
+      span({class: "pointer-events-none font-emoji"}, data.icon),
       span({ class: "pointer-events-none ml-2 capitalize"}, data.name)
     )
   }

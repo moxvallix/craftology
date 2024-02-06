@@ -1,0 +1,33 @@
+<div class="grow flex flex-col items-center justify-center">
+  <h1 class="text-5xl">Craftology</h1>
+  <h2 class="text-xl">Log in</h2>
+  <p>Sign in to save your discoveries!</p>
+  <div class="max-w-sm w-full">
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="flex flex-col gap-2 mb-2">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "rounded" %>
+    </div>
+
+    <div class="flex flex-col gap-2 mb-2">
+      <%= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "current-password", class: "rounded" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="flex items-center gap-2 mb-2">
+        <%= f.check_box :remember_me, class: "rounded", class: "rounded" %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+
+    <div class="flex justify-center mt-4">
+      <%= f.submit "Log in", class: "px-4 py-2 rounded border cursor-pointer grow bg-gray-100" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="underline mt-4">
+  <%= render "devise/shared/links" %>
+</div>
