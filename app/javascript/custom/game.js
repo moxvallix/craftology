@@ -160,7 +160,7 @@ export class Craftology {
     return new Promise((resolve, _) => {
       const request = (retries, retryCount = 0) => {
         // Make the HTTP request
-        fetch(`/api/craft?left=${encodeURI(left)}&right=${encodeURI(right)}`).then((res) => {
+        fetch(`/api/craft?left=${encodeURI(left)}&right=${encodeURI(right)}&uuid=${this.claimID}`).then((res) => {
           res.json()
           .then(json => {
             if (json.pending === true && retries > 0) {

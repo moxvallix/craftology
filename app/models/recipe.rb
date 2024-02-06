@@ -2,6 +2,7 @@ class Recipe < ApplicationRecord
   belongs_to :left_element, class_name: "Element"
   belongs_to :right_element, class_name: "Element"
   belongs_to :result, class_name: "Element", optional: true
+  belongs_to :discovered_by, class_name: "User", optional: true
 
   enum :status, %i[active scheduled pending failed], prefix: true
 
@@ -10,4 +11,11 @@ class Recipe < ApplicationRecord
     .where(left_element: { name: left }, right_element: { name: right })
     .or(where(left_element: { name: right }, right_element: { name: left }))
   }
+  scope :uuid, ->(uuid) { where(uuid: uuid) }
+  scope :unclaimed, -> { where(discovered_by: nil) }
+
+  def discoverer
+    return discovered_by.name if discovered_by.present?
+    "Anonymous"
+  end
 end
