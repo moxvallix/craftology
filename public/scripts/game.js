@@ -210,6 +210,7 @@ export class Craftology {
     this.selectedElements.push(event.target)
     this.selectedElementsData.push(data)
     event.target.classList.add("bg-amber-100")
+    event.target.classList.remove("bg-white")
 
     if (this.selectedElements.length >= 2) {
       let left = this.selectedElements[0]
@@ -245,6 +246,7 @@ export class Craftology {
   handleElementsDeselect() {
     this.selectedElements.forEach(element => {
       element.classList.remove("bg-amber-100")
+      element.classList.add("bg-white")
     })
     this.selectedElements = []
     this.selectedElementsData = []
