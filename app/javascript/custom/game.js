@@ -270,12 +270,13 @@ export class Craftology {
   }
   
   combineElements(rect, left, right) {
-    let pending = this.elementIcon({name: "Pending", icon: "⌛", description: "Crafting in progress..."})
+    let pending = this.elementIcon({name: "Crafting...", icon: "⌛", description: "Crafting in progress..."})
     pending.removeAttribute("draggable")
     pending.style.display = "none"
     pending.style.position = "absolute"
     pending.style.top = `${rect.top}px`
     pending.style.left = `${rect.left}px`
+    pending.classList.add("heartbeat", "cursor-default")
 
     setTimeout(() => {
       pending.style.display = ""

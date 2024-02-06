@@ -2,13 +2,13 @@ class CraftNewElementJob < ApplicationJob
   require 'net/http'
   require 'uri'
 
+  include Craftology::Env
+
   PROMPT_TEMPLATE = File.read("lib/assets/prompt.txt").freeze
-  LLAMA_ENDPOINT = URI("http://localhost:8080/completion")
   SCHEDULE_FAILURE_RETRY = 10.minutes
   SCHEDULE_PENDING_RETRY = 1.hour
 
   queue_as :default
-
 
   def self.allow_schedule?(recipe)
     return true if recipe.status_scheduled?
@@ -22,14 +22,7 @@ class CraftNewElementJob < ApplicationJob
     return false unless self.class.allow_schedule?(recipe)
     recipe.update(status: :pending)
     prompt_text = prompt(recipe.left_element.name, recipe.right_element.name)
-    response = send_prompt(prompt_text)
-    response_json = JSON.parse(response.body)
-    
-    begin
-      content = response_json["content"].split("\n").first
-      puts content
-      element_data = JSON.parse(content).symbolize_keys
-    end
+    element_data = send_prompt(prompt_text)
 
     recipe.reload
     return false unless recipe.status_pending?
@@ -68,11 +61,50 @@ class CraftNewElementJob < ApplicationJob
     PROMPT_TEMPLATE.gsub("%1", left).gsub("%2", right)
   end
 
-  def send_prompt(prompt)
+  def send_prompt(prompt_text)
+    service = find_value_by_name("llm", "service")
+    case service
+    when "llama" then return prompt_llama_cpp(prompt_text)
+    when "togetherai" then return prompt_together_ai(prompt_text)
+    end
+  end
+  
+  private
+
+  def process_response(output)
+    content = output.split("\n").first
+    JSON.parse(content).symbolize_keys
+  end
+  
+  def prompt_llama_cpp(prompt_text)
     json = {
       stream: false,
-      prompt: prompt
+      prompt: prompt_text
     }.to_json
-    Net::HTTP.post(LLAMA_ENDPOINT, json)
+    response = Net::HTTP.post(URI(find_value_by_name("llm", "endpoint")), json)
+    response_json = JSON.parse(response.body)
+    process_response(response_json["content"])
+  end
+
+  def prompt_together_ai(prompt_text)
+    json = {
+      model: "lmsys/vicuna-13b-v1.5",
+      temperature: 0.8,
+      top_p: 0.950,
+      top_k: 40,
+      max_tokens: 350,
+      repetition_penalty: 1.1,
+      prompt: prompt_text
+    }.to_json
+    headers = {
+      "Authorization" => "Bearer #{find_value_by_name("togetherai", "token")}",
+      "Content-Type" => "application/json"
+    }
+    response = Net::HTTP.post(
+      URI(find_value_by_name("llm", "endpoint")), json, headers
+    )
+    response_json = JSON.parse(response.body)
+    output = response_json.dig("output", "choices", 0, "text")
+    process_response(output)
   end
 end

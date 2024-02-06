@@ -16,7 +16,7 @@ class Element < ApplicationRecord
 
   def self.default_list
     out = "["
-    all.map { |e| out << e.to_json.gsub(/^"|"$/, "") + ", " }
+    default.map { |e| out << e.to_json.gsub(/^"|"$/, "") + ", " }
     out.delete_suffix(", ") + "]"
   end
 

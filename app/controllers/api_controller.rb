@@ -11,6 +11,8 @@ class ApiController < ApplicationController
       return render "elements/pending"
     end
 
+    return render "elements/pending" if recipe.status_pending?
+
     render "elements/show", locals: { element: Element.error }
   end
 
