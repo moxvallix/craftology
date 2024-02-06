@@ -1,17 +1,14 @@
-class ApiController < ApplicationController
-  CRAFT_FAILURE_RETRY = 10.minutes
-  
+class ApiController < ApplicationController  
   def craft
     recipe = find_or_create_recipe
     return render "elements/show", locals: { element: recipe.result } if recipe.status_active?
-    if recipe.status_failed?
-      return render "elements/error" unless (Time.current - recipe.updated_at) > CRAFT_FAILURE_RETRY
-      recipe.update(status: :scheduled)
-    end
-    
-    CraftNewElementJob.perform_later(recipe) if recipe.status_scheduled?
 
-    render "elements/pending"
+    if CraftNewElementJob.allow_schedule?(recipe)
+      CraftNewElementJob.perform_later(recipe)
+      return render "elements/pending"
+    end
+
+    render "elements/show", locals: { element: Element.error }
   end
 
   private

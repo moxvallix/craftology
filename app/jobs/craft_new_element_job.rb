@@ -9,8 +9,17 @@ class CraftNewElementJob < ApplicationJob
 
   queue_as :default
 
+
+  def self.allow_schedule?(recipe)
+    return true if recipe.status_scheduled?
+    difference = Time.current - recipe.updated_at
+    return true if recipe.status_failed? && difference > SCHEDULE_FAILURE_RETRY
+    return true if recipe.status_pending? && difference > SCHEDULE_PENDING_RETRY
+    false
+  end
+
   def perform(recipe)
-    return false unless allow_schedule?(recipe)
+    return false unless self.class.allow_schedule?(recipe)
     recipe.update(status: :pending)
     prompt_text = prompt(recipe.left_element.name, recipe.right_element.name)
     response = send_prompt(prompt_text)
@@ -33,14 +42,6 @@ class CraftNewElementJob < ApplicationJob
   rescue => e
     Rails.logger.error("Failed to craft recipe: " + e.message)
     recipe.update(status: :failed)
-  end
-
-  def allow_schedule?(recipe)
-    return true if recipe.status_scheduled?
-    difference = Time.current - recipe.updated_at
-    return true if recipe.status_failed? && difference > SCHEDULE_FAILURE_RETRY
-    return true if recipe.status_pending? && difference > SCHEDULE_PENDING_RETRY
-    false
   end
 
   def set_recipe(recipe, data)

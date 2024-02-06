@@ -5,6 +5,10 @@ class Element < ApplicationRecord
   scope :uuid, ->(uuid) { where(uuid: uuid) }
   scope :unclaimed, -> { where(discovered_by: nil) }
 
+  def self.error
+    find_by_name("error")
+  end
+
   def discoverer
     return discovered_by.name if discovered_by.present?
     "Anonymous"
