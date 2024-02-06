@@ -1,7 +1,10 @@
 class ApiController < ApplicationController  
   def craft
     recipe = find_or_create_recipe
-    return render "elements/show", locals: { element: recipe.result } if recipe.status_active?
+    if recipe.status_active?
+      own_discovery = (recipe.result&.discovered_uuid == params[:uuid] || recipe.result&.discovered_by == current_user)
+      return render "elements/show", locals: { element: recipe.result, own_discovery: own_discovery }
+    end
 
     if CraftNewElementJob.allow_schedule?(recipe)
       CraftNewElementJob.perform_later(recipe)

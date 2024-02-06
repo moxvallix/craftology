@@ -47,7 +47,7 @@ class CraftNewElementJob < ApplicationJob
   def set_recipe(recipe, data)
     params = {
       name: data[:result].to_s.downcase.strip.squeeze(" "),
-      icon: data[:emoji].to_s[..1],
+      icon: data[:emoji].to_s[..2],
       description: data[:description],
       discovered_by: recipe.discovered_by,
       discovered_uuid: recipe.discovered_uuid
