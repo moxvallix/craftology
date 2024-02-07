@@ -1,19 +1,28 @@
 import van from "https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.2.8.min.js"
-const {div, span} = van.tags
+const {div, span, input} = van.tags
 
 export class Craftology {
   constructor(params = {}) {
     this.playspace = params.playspace
     this.library = params.library
     this.trash = params.trash
+    this.search = params.search
     this.elements = params.elements || []
     this.claimID = this.getClaimID()
     this.selectedElements = []
     this.selectedElementsData = []
+    
+    let elementJson = localStorage.getItem("craftology-elements")
+    if (elementJson) {
+      try {
+        let savedElements = JSON.parse(elementJson)
+        this.elements = savedElements
+      } catch {}
+    }
 
     for (const index in this.elements) {
       const element = this.elements[index]
-      van.add(this.library, this.libraryElement(element))
+      this.addToLibrary(element)
     }
 
     // Drag and Drop for Playspace
@@ -54,6 +63,7 @@ export class Craftology {
     )
 
     this.playspace.append(this.trashIcon())
+    this.setupSearch(this.search)
   }
 
   getClaimID() {
@@ -91,23 +101,28 @@ export class Craftology {
     })
 
     output.addEventListener("click", event => {
+      event.stopPropagation()
       if (event.shiftKey) {
         return this.wipeBoard()
       }
-      let removed = false
       this.selectedElements.forEach(element => {
         if (element.dataset.type === "playspace") {
-          removed = true
           element.remove()
         }
       })
-      if (!removed) { return }
       this.handleElementsDeselect()
     })
 
     output.addEventListener("dblclick", this.wipeBoard)
 
     return output
+  }
+
+  setupSearch(search) {
+    search.addEventListener("input", event => {
+      console.log(event)
+      this.filterLibrary(event.target.value)
+    })
   }
 
   wipeBoard() {
@@ -201,12 +216,18 @@ export class Craftology {
     })
 
     output.addEventListener("click", event => {this.handleElementSelect(event, data)})
+    output.addEventListener("dblclick", event => {
+      let rect = this.randomPlayspaceRect()
+      this.addToPlayspace(rect, data)
+      this.handleElementsDeselect()
+    })
   
     return output
   }
 
   handleElementSelect(event, data) {
     event.stopPropagation()
+
     this.selectedElements.push(event.target)
     this.selectedElementsData.push(data)
     event.target.classList.add("bg-amber-100")
@@ -217,11 +238,7 @@ export class Craftology {
       let right = this.selectedElements[1]
       if (left === right) { return this.handleElementsDeselect() }
       
-      let playspaceRect = this.playspace.getBoundingClientRect()
-      let rect = {
-        top: playspaceRect.height / 2,
-        left: (playspaceRect.width / 2) - 50
-      }
+      let rect = this.randomPlayspaceRect()
 
       let playspaceElement
 
@@ -240,6 +257,16 @@ export class Craftology {
         }
       })
       this.handleElementsDeselect()
+    }
+  }
+
+  randomPlayspaceRect() {
+    const padding = 24
+
+    let playspaceRect = this.playspace.getBoundingClientRect()
+    return {
+      top: getRandomArbitrary(padding, playspaceRect.height - padding),
+      left: getRandomArbitrary(padding, playspaceRect.width - padding)
     }
   }
 
@@ -287,11 +314,50 @@ export class Craftology {
     this.playspace.append(pending)
   
     this.craftElement(left, right).then(data => {
-      this.playspace.removeChild(pending)
-      let newElement = this.playspaceElement(data)
-      newElement.style.top = `${rect.top}px`
-      newElement.style.left = `${rect.left}px`
-      this.playspace.append(newElement)
+      pending.remove()
+      this.addToPlayspace(rect, data)
+    })
+  }
+
+  addToPlayspace(rect, data) {
+    let newElement = this.playspaceElement(data)
+    newElement.style.top = `${rect.top}px`
+    newElement.style.left = `${rect.left}px`
+    this.playspace.append(newElement)
+    return newElement
+  }
+
+  addToLibrary(data) {
+    let newElement = this.libraryElement(data)
+    this.library.append(newElement)
+    return newElement
+  }
+
+  saveElement(data) {
+    let hasElement = false
+    this.elements.forEach(e => {
+      if (e.name === data.name) { return hasElement = true }
+    })
+    if (!hasElement) {
+      this.elements.push(data)
+      localStorage.setItem("craftology-elements", JSON.stringify(this.elements))
+      this.addToLibrary(data)
+    }
+  }
+
+  filterLibrary(filter) {
+    const pattern = filter.split(" ").map(escapeRegExp).join(".*")
+    const re = new RegExp(pattern, "i")
+    const children = Array.from(this.library.children)
+
+    children.forEach(element => {
+      let match = element.dataset.name.match(re)
+      console.log(element.dataset.type)
+      if (match) {
+        element.classList.remove("hidden")
+      } else {
+        element.classList.add("hidden")
+      }
     })
   }
   
@@ -309,14 +375,7 @@ export class Craftology {
               }, timeOut)
             } else {
               if (!json.pending) {
-                let hasElement = false
-                this.elements.forEach(e => {
-                  if (e.name === json.name) { return hasElement = true }
-                })
-                if (!hasElement) {
-                  this.elements.push(json)
-                  this.library.append(this.libraryElement(json))
-                }
+                this.saveElement(json)
                 resolve(json)
               } else {
                 resolve({name: "error", icon: "🚫", description: "The result of a failed experiment... Better luck next time!"})
@@ -346,3 +405,12 @@ function generateUUID() {
     return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
   });
 };
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex#6969486
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}

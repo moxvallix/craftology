@@ -9,8 +9,13 @@
       </span>
     <% end %>
   </div>
-  <div id="trash" class="overflow-auto grow sm:grow-0 sm:basis-80 p-2">
-    <div id="inventory" class="flex sm:flex-row flex-wrap items-start justify-start gap-2">
+  <div id="trash" class="relative flex flex-col justify-between grow sm:grow-0 sm:basis-80 p-2">
+    <div class="overflow-auto">
+      <div id="inventory" class="flex sm:flex-row flex-wrap items-start justify-start gap-2">
+      </div>
+    </div>
+    <div class="p-2">
+      <input id="search" type="text" class="w-full rounded" placeholder="Filter elements">
     </div>
   </div>
 </div>
@@ -19,8 +24,9 @@
   import {Craftology} from "/scripts/game.js"
   let playspace = document.getElementById("playspace")
   let inventory = document.getElementById("inventory")
+  let search = document.getElementById("search")
   let trash = document.getElementById("trash")
   let elements = <%== Element.default_list %>
 
-  let game = new Craftology({playspace: playspace, library: inventory, trash: trash, elements: elements})
+  let game = new Craftology({playspace: playspace, library: inventory, trash: trash, elements: elements, search: search})
 </script>
