@@ -1,0 +1,834 @@
+[
+  [
+    "error",
+    "The result of a failed experiment... Better luck next time!",
+    "🚫"
+  ],
+  [
+    "earth",
+    "Earth is our planet. Home to many diverse life forms.",
+    "🌏",
+    true
+  ],
+  [
+    "air",
+    "Essential atmospheric gas mixture comprising oxygen, nitrogen & trace elements, vital for respiration & sustaining life",
+    "🍃",
+    true
+  ],
+  [
+    "fire",
+    "Fire is an intense chemical reaction releasing heat, light, and often flames.",
+    "🔥",
+    true
+  ],
+  [
+    "water",
+    "Essential clear liquid sustaining life, comprising of H₂O molecules.",
+    "💧",
+    true
+  ],
+  [
+    "dirt",
+    "Dispersed soil particles mixed with organic matter typically resulting from erosion or human activity; commonly seen as unclean substance.",
+    "🪴"
+  ],
+  [
+    "atmosphere",
+    "The atmosphere is the gaseous layer surrounding Earth, comprising oxygen, nitrogen, water vapor & trace elements essential for life support.",
+    "🌃"
+  ],
+  [
+    "lava",
+    "Lava is molten rock erupting from volcanoes or fissures, typically very hot & destructive.",
+    "🔥"
+  ],
+  [
+    "plant",
+    "A living organism rooted in soil, producing food via photosynthesis.",
+    "🌱"
+  ],
+  [
+    "wind",
+    "Wind is the natural air current resulting from atmospheric pressure differences & horizontal movement of gases.",
+    "🍃"
+  ],
+  [
+    "smoke",
+    "Visible airborne particulate matter created by burning or combustion.",
+    "💨"
+  ],
+  [
+    "cloud",
+    "Atmospheric water vapor condensation visible as a floating mass in the sky.",
+    "☁️"
+  ],
+  [
+    "sky",
+    "The region of the atmosphere that is visible from the ground, extending from the horizon to outer space.",
+    "⛅"
+  ],
+  [
+    "heat",
+    "Energy transferred due to temperature difference resulting in molecular vibration.",
+    "🔥"
+  ],
+  ["steam", "Hot water vapor formed during heat conversion.", "♨"],
+  [
+    "puddle",
+    "💧",
+    "A small collection of water, typically formed from rain or melted snow, lying on the ground or other surface."
+  ],
+  [
+    "mud",
+    "🟫",
+    "A mixture of water and soil or other materials, typically containing impurities."
+  ],
+  ["brick", "🧱", "A block of clay hardened by heat for use in construction."],
+  [
+    "wall",
+    "🌋",
+    "A structure designed to stand up and prevent the passage of people or things such as a barrier constructed of brick, stone, or other material."
+  ],
+  [
+    "house",
+    "🏠",
+    "A building that functions as living quarters. It typically consists of rooms arranged around a central hall."
+  ],
+  [
+    "village",
+    "🏡",
+    "A small community having a central place, as a village green."
+  ],
+  [
+    "town",
+    "🏡",
+    "A small or medium-sized settlement having a defined community and being larger than a village but smaller than a city."
+  ],
+  [
+    "city",
+    "🏙️",
+    "A large and permanent human settlement with an urban design and infrastructure."
+  ],
+  [
+    "metropolis",
+    "🌆",
+    "A large city, typically one that is a significant cultural, financial, or political center for a nation or region."
+  ],
+  [
+    "furnace",
+    "💥",
+    "A large, enclosed container for burning fuel to produce heat or power."
+  ],
+  [
+    "iron",
+    "🔶",
+    "A heavy, silvery-grey, ductile metal, used for making tools, machinery, and other structural components."
+  ],
+  [
+    "gold",
+    "🥇",
+    "A precious yellow metal, highly malleable and ductile, and not easily corroded or tarnished."
+  ],
+  [
+    "tree",
+    "🌲",
+    "A large perennial plant with a single stem or trunk, supporting branches and leaves in most species."
+  ],
+  [
+    "grove",
+    "🌳",
+    "A small thicket of trees, especially one that forms a copse or woodland."
+  ],
+  [
+    "forest",
+    "🌲",
+    "A large area covered with trees and undergrowth. A forest can be used for various purposes, such as timber, fuel, food, medicines, and recreation."
+  ],
+  [
+    "jungle",
+    "🌳",
+    "A large forest covered with undergrowth and tall trees, especially in tropical regions."
+  ],
+  [
+    "swamp",
+    "🛁",
+    "A wetland area covered by shallow water and having a spongy surface, typically forested with mosses, rushes, or trees."
+  ],
+  [
+    "geyser",
+    "🌋",
+    "A large hot spring, characterized by intermittent eruptions of steam, hot water, or mud."
+  ],
+  [
+    "hot spring",
+    "🛁☀️",
+    "A spring of thermal water, often located in geothermal areas and typically heated to a temperature above human body temperature."
+  ],
+  [
+    "stream",
+    "🏞️💦",
+    "A body of flowing water moving between land and land, or a narrow, continuous flow of liquid."
+  ],
+  [
+    "river",
+    "🏝️",
+    "A large flowing body of water that usually empties into a sea or ocean."
+  ],
+  [
+    "lake",
+    "🏝️",
+    "A large body of still or slowly moving water, larger than a pond, surrounded by land."
+  ],
+  [
+    "sea",
+    "🌊",
+    "A large body of salt water that covers the Earth's surface, not as part of the rivers, lakes, or glaciers."
+  ],
+  [
+    "ocean",
+    "🌊",
+    "A large body of salt water that covers most of Earth's surface and supports a variety of aquatic life."
+  ],
+  [
+    "stone",
+    "🪨",
+    "A solid piece of mineral composition, typically one that can be cut and used as a tool or building material."
+  ],
+  ["boulder", "🪨", "A large, usually rounded, mass of rock; a boulder."],
+  [
+    "mountain",
+    "🏔️",
+    "A large natural elevation of the Earth's surface rising abruptly from the surrounding level."
+  ],
+  [
+    "mountain range",
+    "🏔️",
+    "A series of connected mountains or hill ranges forming a distinct and generally continuous chain."
+  ],
+  ["island", "🏝️", "A piece of sub-continental land surrounded by water."],
+  [
+    "continent",
+    "🗺️",
+    "A large area of land surrounded by water, forming one of the major divisions of the Earth."
+  ],
+  [
+    "planet",
+    "🌍",
+    "A celestial body orbiting a star, large enough to be rounded by its own gravity."
+  ],
+  [
+    "land",
+    "🏝️",
+    "A piece of ground on which plants, buildings, or other structures may stand."
+  ],
+  [
+    "condensation",
+    "☁️",
+    "The change of a substance from a gas to a liquid, especially water vapor in the air forming dew or frost."
+  ],
+  [
+    "rain",
+    "🌧️",
+    "Large drops of water falling from clouds, often as part of the precipitation process."
+  ],
+  [
+    "storm",
+    "🌧️",
+    "A disturbance of the atmosphere characterized by strong winds, heavy rain, thunder, and sometimes hail or snow."
+  ],
+  [
+    "lightning",
+    "⚡",
+    "An electric discharge that occurs in the atmosphere, producing a bright flash and thunder."
+  ],
+  [
+    "electricity",
+    "⚡",
+    "A flow of electric charge, causing a current to move in a conductor."
+  ],
+  [
+    "dust",
+    "🌍",
+    "Extremely small particles of matter, usually raised into the air and settled as a powder."
+  ],
+  [
+    "sand",
+    "🏖️",
+    "A loose, fragmented, naturally occurring mineral material, formed of small, loose grains."
+  ],
+  [
+    "beach",
+    "🏖️",
+    "A land area along a body of water that slopes gradually towards the water and is covered with sand, gravel, shingle, or other particles."
+  ],
+  [
+    "desert",
+    "🏜️",
+    "A barren area of landscape where little precipitation occurs and, consequently, living conditions are hostile for plant and animal life."
+  ],
+  [
+    "glass",
+    "🍷",
+    "A hard, transparent material, often used to make windows, bottles, or other objects."
+  ],
+  [
+    "bottle",
+    "🥫",
+    "A container with a narrow neck and a bulging body, used for storing liquids."
+  ],
+  [
+    "snow globe",
+    "❄️",
+    "A decorative ball filled with water and small models, which creates a snowy scene when shaken."
+  ],
+  [
+    "jar",
+    "🍯",
+    "A wide-mouthed container with a tight-fitting lid, used for holding or preserving food."
+  ],
+  [
+    "steam engine",
+    "🚂",
+    "A type of reciprocating prime mover that converts heat energy into mechanical work to create motion."
+  ],
+  [
+    "tool",
+    "🛠",
+    "An instrument, especially one held in the hand, used to carry out a particular function."
+  ],
+  [
+    "axe",
+    "🔪",
+    "A tool consisting of a heavy flat blade fixed in a wooden handle, used for chopping down trees or splitting wood."
+  ],
+  [
+    "wood",
+    "🪵",
+    "A hard, fibrous substance found in the stems and roots of a tree."
+  ],
+  [
+    "boat",
+    "⚓️",
+    "A watercraft designed to float or plane, providing transportation or transportation of goods on water."
+  ],
+  [
+    "ashes",
+    "🧯",
+    "The powdery residue left after a substance has been burned."
+  ],
+  [
+    "campfire",
+    "🏕️🔥",
+    "A small fire built outdoors, typically in a portable metal or stone fire pit, used for cooking, warmth, or recreation."
+  ],
+  [
+    "gravestone",
+    "🪦",
+    "A large flat stone used to cover the grave of a person, often engraved with an inscription."
+  ],
+  [
+    "cemetary",
+    "🕊",
+    "A place for the burial of the dead, often with trees or shrubs, providing a solemn atmosphere."
+  ],
+  [
+    "light",
+    "💡",
+    "Radiant energy, usually visible, that is emitted from a source and travels as electromagnetic waves."
+  ],
+  [
+    "rainbow",
+    "🌈",
+    "A meteorological phenomenon that is caused by reflection, refraction and dispersion of light in water droplets."
+  ],
+  [
+    "bones",
+    "🫱",
+    "Hard, calcium structures that give support and shape to the body of an animal, protecting vital organs."
+  ],
+  [
+    "fossil",
+    "🕳️",
+    "The remains or traces of an organism preserved in fossil fuels, petrified wood, or stone since the Precambrian time."
+  ],
+  [
+    "dinosaur",
+    "🦖",
+    "A large reptile that lived in the Mesozoic Era, now extinct, characterized by a bipedal or quadrupedal gait and a large body size."
+  ],
+  [
+    "dragon",
+    "🐉",
+    "A legendary creature, typically a large serpent-like or reptile-like entity, capable of breathing fire."
+  ],
+  [
+    "ship",
+    "⚓️",
+    "A large watercraft designed for transportation on water, typically with a hull and sails or engines."
+  ],
+  [
+    "paper",
+    "📜",
+    "A thin material produced by pressing together the pulp of trees or other plants, usually fitting for writing or printing."
+  ],
+  [
+    "book",
+    "📚",
+    "A collection of written, printed, illustrated, or blank sheets, made of ink, paper, parchment, or other materials, usually fastened together to hinge at one side."
+  ],
+  [
+    "monkey",
+    "🐒",
+    "A primate animal with a long, usually prehensile tail, pointed snout, and opposable thumbs."
+  ],
+  [
+    "chimpanzee",
+    "🐒",
+    "An Old World monkey that is considered a primate, with humans being the closest living relatives."
+  ],
+  [
+    "human",
+    "👥",
+    "A living organism that is characterized by voluntary movements, a complex nervous system, the ability to reason and communicate, and having a body with five sensory organs."
+  ],
+  [
+    "zombie",
+    "🧟",
+    "A reanimated corpse, typically depicted as a decaying body that exhibits a strong desire for human flesh."
+  ],
+  [
+    "pirate",
+    "☠️",
+    "A person who robs ships and lives by plundering and pillaging."
+  ],
+  [
+    "treasure",
+    "💰",
+    "Valuable material, especially metals like gold and silver, or gems."
+  ],
+  [
+    "jewel",
+    "💎",
+    "A precious stone, especially one that has been cut and polished."
+  ],
+  [
+    "crown",
+    "👑",
+    "The part of the head that is covered by the top growth of hair or by a covering such as a crown."
+  ],
+  [
+    "ghost",
+    "👻",
+    "A supposed apparition of a deceased person, believed to inhabit an area or repeatedly appear to living persons."
+  ],
+  [
+    "skeleton",
+    "🔪",
+    "The framework or structure of a thing, especially a living organism."
+  ],
+  [
+    "skull",
+    "💢",
+    "The bony, protective structure at the upper end of the spinal column of a vertebrate, containing the brain."
+  ],
+  ["egg", "🥚", "A hard-shelled object from which a baby animal hatches."],
+  [
+    "bird",
+    "🐦",
+    "A warm-blooded egg-laying vertebrate covered with feathers, with a beaked and often webbed head and limbs adapted for flight."
+  ],
+  [
+    "flock",
+    "🐑",
+    "A group of sheep, especially when tended by a single shepherd."
+  ],
+  [
+    "herd",
+    "🐄",
+    "A group of animals that move together, usually for protection."
+  ],
+  [
+    "monarch",
+    "🔶",
+    "A large, showy North American butterfly with orange wings and black veins, and a distinctive white patch on each wing near the tail."
+  ],
+  [
+    "tower",
+    "🏙️",
+    "A tall, continuous structure, typically consisting of several vertically stacked floors and often used as a place of residence or business."
+  ],
+  [
+    "castle",
+    "🏰",
+    "A large, imposing building, typically with several floors and surrounded by a moat or high walls."
+  ],
+  [
+    "palace",
+    "🏰",
+    "A large, impressive building, typically having several stories and many rooms, occupied by a monarch or other person of high rank."
+  ],
+  [
+    "knight",
+    "🏯",
+    "A medieval warrior, wearing body armor and mounted on horseback, maintaining peace and justice in a kingdom."
+  ],
+  [
+    "king",
+    "🏯",
+    "A monarch, or the supreme ruler of a country, state, or other polity."
+  ],
+  ["queen", "👸", "A female sovereign, monarch, or ruler."],
+  [
+    "chess",
+    "♔",
+    "A two-player strategy game played on a checkered board with 16 pieces each, one set white and the other black."
+  ],
+  [
+    "sword",
+    "⚔️",
+    "A bladed weapon with a long handle, used for cutting or thrusting."
+  ],
+  [
+    "engineer",
+    "🔧",
+    "A professional who designs, builds, or maintains structures, machines, devices, systems, and processes."
+  ],
+  [
+    "robot",
+    "🤖",
+    "A machine, often programmable by a computer, capable of carrying out a complex series of actions automatically."
+  ],
+  ["farmer", "👨‍🌾", "Someone who grows and harvests crops on a farm."],
+  [
+    "coal",
+    "♨️",
+    "A black or brownish-black sedimentary rock formed by compacting and indurating of peat and coalified plant matter, containing significant amounts of carbon and hydrocarbons."
+  ],
+  [
+    "life",
+    "🌺",
+    "The condition that distinguishes physical entities having biological processes, such as growth, reproduction, and response to stimuli, from those lacking such processes."
+  ],
+  [
+    "statue",
+    "🛋️",
+    "A sculpture in stone, metal, or other material, usually depicting a person or animal, and often on a pedestal."
+  ],
+  [
+    "golem",
+    "🤖",
+    "A mythical being made of clay or mud, often animated and given the form of a human, giant or animal."
+  ],
+  [
+    "diamond",
+    "💎",
+    "A mineral composed of pure carbon, valued for its beauty and durability."
+  ],
+  [
+    "diamond block",
+    "💎",
+    "A block in Minecraft that is as hard as diamond, but has no specific function other than being decorative."
+  ],
+  [
+    "slush",
+    "❄️",
+    "A semi-solid mixture of snow and water, often melted and sweetened to make a dessert."
+  ],
+  [
+    "ice",
+    "❄️",
+    "A solid state of water formed by freezing, typically containing impurities like snowflakes."
+  ],
+  [
+    "snow",
+    "❄️",
+    "A common water crystal that falls as snowflakes in winter weather."
+  ],
+  [
+    "iceberg",
+    "💧",
+    "A large piece of fresh glacier ice that has broken off and is floating in the sea."
+  ],
+  [
+    "pond",
+    "🍁",
+    "A small body of still or gently flowing water, especially in a natural or semi-natural setting."
+  ],
+  [
+    "lily pad",
+    "🐟",
+    "A broad, flat platform on the surface of water, used as a floating base by some aquatic animals."
+  ],
+  [
+    "fish",
+    "🕯",
+    "A cold-blooded aquatic animal. Fish have gills for breathing and fins for swimming."
+  ],
+  [
+    "incense",
+    "🕯️",
+    "A substance burnt to produce a fragrant smoke as a religious or aromatic offering."
+  ],
+  [
+    "mosquito",
+    "🐝",
+    "A small, midge-like fly that can transmit diseases, such as malaria and yellow fever, via its bite."
+  ],
+  [
+    "swarm",
+    "🐝",
+    "A large number of animals or insects flying, swimming, or moving together in close formation."
+  ],
+  [
+    "bee",
+    "🐝",
+    "An insect that is covered with fuzzy hair, feeds on nectar and pollen, and makes honey."
+  ],
+  [
+    "honeycomb",
+    "🍯",
+    "A structure made by bees from wax, for storing honey and rearing young."
+  ],
+  ["honey", "🍯", "A sweet food made from the nectar of flowers by bees."],
+  [
+    "mead",
+    "☀️",
+    "An alcoholic beverage made from fermented honey and water, often with fruits or herbs added for flavor."
+  ],
+  [
+    "sun",
+    "🌙",
+    "The star at the center of the solar system, providing light and heat through its radiation."
+  ],
+  [
+    "moon",
+    "🌟",
+    "The natural satellite that revolves around a planet and is illuminated by sunlight to produce a luminous effect."
+  ],
+  [
+    "star",
+    "🌠",
+    "A massive celestial body, luminous in the night sky, radiating energy derived from nuclear reactions within its core."
+  ],
+  [
+    "constellation",
+    "🌠",
+    "A group of stars forming a recognizable pattern in the night sky."
+  ],
+  [
+    "solar system",
+    "🌍",
+    "The sun and all the planets and other celestial bodies that revolve around it."
+  ],
+  [
+    "galaxy",
+    "🌠",
+    "A system of millions or billions of stars, together with gas and dust, held together by gravitational attraction."
+  ],
+  [
+    "universe",
+    "🌀",
+    "All existing matter, energy, space, and time; the cosmos."
+  ],
+  [
+    "multiverse",
+    "🌞",
+    "A hypothetical group of multiple universes, including our universe."
+  ],
+  [
+    "day",
+    "🌃",
+    "A 24-hour period of time, usually beginning at sunrise and ending at sunrise the next day."
+  ],
+  ["night", "🌅", "The period of darkness between sunset and sunrise."],
+  [
+    "twilight",
+    "🗺",
+    "The soft red, orange, and purple light that occurs when the sun is near the horizon."
+  ],
+  [
+    "map",
+    "🗺️",
+    "A representation of an area of the world, showing physical features, locations, and roads."
+  ],
+  [
+    "compass",
+    "⏳",
+    "An instrument used for determining directions, typically having a dial calibrated with a magnetic compass needle pointing toward magnetic north."
+  ],
+  ["clock", "⏳", "An instrument that measures, displays, and records time."],
+  [
+    "time",
+    "🌠",
+    "The continuous passage of existence and events that occurs in the present. In physics, it is the dimension in which events occur and are measured in seconds, minutes, hours, etc."
+  ],
+  [
+    "space",
+    "🌌",
+    "The three-dimensional expanse in which all physical objects are located and have relation."
+  ],
+  [
+    "bible",
+    "🕵️‍♂️",
+    "The sacred writings of a religion, used as a guide for conduct, religious beliefs, and practices."
+  ],
+  [
+    "priest",
+    "⛪",
+    "A religious leader authorized to perform the sacred rites of a religion, especially the administration of sacraments."
+  ],
+  [
+    "bookshelf",
+    "📚",
+    "A piece of furniture used for storing and displaying books."
+  ],
+  [
+    "library",
+    "📚🏛️",
+    "A building or room containing a collection of books, periodicals, and sometimes films, records, or other sources of information."
+  ],
+  [
+    "family",
+    "👶",
+    "A group of individuals related by blood or marriage, or those who live together as a close-knit group."
+  ],
+  [
+    "child",
+    "🏫",
+    "A young human being or other creature in its early stage of development."
+  ],
+  [
+    "student",
+    "📚",
+    "A person who attends an educational institution, typically one enrolled in a course or degree program."
+  ],
+  [
+    "school",
+    "🎓",
+    "An institution providing education, usually for children, in a formal setting."
+  ],
+  [
+    "graduation",
+    "🏫✏️",
+    "The act of receiving a degree or diploma, typically at the end of a course of study."
+  ],
+  [
+    "teacher",
+    "🎓",
+    "A person who teaches students, typically at a school or university."
+  ],
+  [
+    "diploma",
+    "💼",
+    "A document issued by a college or university upon completion of a course of study."
+  ],
+  [
+    "job",
+    "🛶",
+    "An activity, particularly a regular occupation, for which someone is employed to perform a service or labour."
+  ],
+  [
+    "viking",
+    "⚔️",
+    "A seafaring explorer, raider, or trader from Northern Europe, active mainly from the late 8th to the late 11th centuries."
+  ],
+  [
+    "yggdrasil",
+    "🌲",
+    "The enormous tree at the center of the Norse cosmos, uniting the various realms."
+  ],
+  [
+    "prayer",
+    "🙏",
+    "An act of supplication directed towards a deity or deities or an expression of hope for help, comfort, and guidance."
+  ],
+  [
+    "music",
+    "🎶",
+    "An art form employed for the purpose of entertaining, expressing emotion, and communicating."
+  ],
+  ["church", "⛪", "A building used for public Christian worship."],
+  [
+    "religion",
+    "☦️",
+    "A set of beliefs, values, and practices that is often institutionalized and is considered to be a cultural system."
+  ],
+  ["pope", "🕵️‍♂️", "The bishop of Rome and leader of the Roman Catholic Church."],
+  [
+    "art",
+    "🎨",
+    "The expression or application of human creative skill and imagination, typically in a visual form such as painting or sculpture."
+  ],
+  [
+    "color",
+    "🌈",
+    "The quality of an object or substance with respect to light reflected or emitted from it, usually determining its appearance."
+  ],
+  [
+    "lightbulb",
+    "💡",
+    "An electric device producing visible light from an electric current. Most common type is the incandescent bulb."
+  ],
+  ["idea", "💡", "A thought or suggestion as opposed to a material object."],
+  [
+    "unicorn",
+    "🦄",
+    "A mythical creature, often depicted as a horse with a single horn on its forehead."
+  ],
+  [
+    "submarine",
+    "🚣‍♂️",
+    "A watercraft designed to operate underwater, usually propelled by a nuclear engine or battery-powered electric motor."
+  ],
+  [
+    "car",
+    "🚗",
+    "A motor vehicle designed for transportation on roads, typically having four wheels, a single engine, and seating for several people."
+  ],
+  [
+    "bus",
+    "🚍",
+    "A large motor vehicle designed to carry many passengers, typically on a fixed route."
+  ],
+  [
+    "steam train",
+    "🚂",
+    "A type of railway locomotive that generates steam to move its wheels."
+  ],
+  [
+    "fuel",
+    "🛢️",
+    "A substance that can be burned or otherwise converted into heat, energy, or mechanical work."
+  ],
+  [
+    "train",
+    "🚂",
+    "A vehicle that runs regularly on rails, used for transporting passengers or goods."
+  ],
+  [
+    "plane",
+    "✈️",
+    "A powered, fixed-wing aircraft, making long-distance air travel possible."
+  ],
+  [
+    "hot air balloon",
+    "🔥🎈",
+    "A large balloon that carries passengers aloft by heating the air inside it with a fire."
+  ],
+  [
+    "silver",
+    "💁‍♀️",
+    "A precious metal that is a chemical element with the symbol Ag and atomic number 47."
+  ],
+  [
+    "copper",
+    "🔌",
+    "A ductile metal that is an excellent conductor of electricity. It is found as a pure metal and in ores."
+  ],
+  [
+    "golemscript",
+    "🤖",
+    "The coolest programming language."
+  ]
+]
