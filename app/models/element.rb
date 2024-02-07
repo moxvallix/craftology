@@ -1,5 +1,6 @@
 class Element < ApplicationRecord
   belongs_to :discovered_by, class_name: "User", optional: true
+  has_many :recipes, foreign_key: "result_id"
 
   scope :default, -> { where(default: true) }
   scope :uuid, ->(uuid) { where(uuid: uuid) }
@@ -24,6 +25,10 @@ class Element < ApplicationRecord
     Jbuilder.new do |json|
       json.(self, :name, :icon, :description)
     end
+  end
+
+  def recipe_strings
+    recipes.map { |r| r.to_s }
   end
 
   def to_json

@@ -18,4 +18,9 @@ class Recipe < ApplicationRecord
     return discovered_by.name if discovered_by.present?
     "Anonymous"
   end
+
+  def to_s
+    return unless left_element.present? && right_element.present?
+    "#{left_element.name} + #{right_element.name}"
+  end
 end
