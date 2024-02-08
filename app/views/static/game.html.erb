@@ -1,23 +1,32 @@
-<div class="flex flex-col sm:flex-row grow max-h-screen">
-  <div id="playspace" class="grow basis-4/5 sm:basis-auto bg-gray-200 h-full">
-    <h1 id="title" class="text-2xl p-2 select-none">Craftology</h1>
-    <% if current_user.present? %>
-      <span class="absolute bottom-4 left-4 select-none text-gray-600">
-        Signed in as <%= current_user.name %>
-        -
-        <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form_class: "inline", class: "underline" %>
-      </span>
-    <% end %>
-  </div>
-  <div id="trash" class="relative flex flex-col justify-between grow sm:grow-0 sm:basis-80 p-2">
-    <div class="overflow-auto">
-      <div id="inventory" class="flex sm:flex-row flex-wrap items-start justify-start gap-2">
+<div class="flex justify-center items-center sm:flex-row grow max-h-screen site-bg">
+  <div class="flex flex-col max-w-screen-lg lg:max-h-[800px] h-full grow lg:rounded-lg lg:shadow-lg overflow-auto lg:mx-4 my-4">
+    <div id="dropzone" class="relative flex flex-col grow basis-2/5 sm:basis-auto bg-gray-200 h-full">
+      <h1 id="title" class="text-2xl p-2 select-none">Craftology</h1>
+      <div id="playspace" class="p-2 flex items-start justify-start flex-wrap gap-2 overflow-auto max-h-[440px]">
       </div>
     </div>
-    <div class="p-2">
-      <input id="search" type="text" class="w-full rounded" placeholder="Filter elements">
+    <div id="trash" class="relative flex flex-col justify-between grow pb-8 lg:pb-2 sm:grow-0 sm:basis-4/5 px-2 pt-2 bg-white max-h-96">
+      <div class="overflow-auto">
+        <div id="inventory" class="flex sm:flex-row flex-wrap items-start justify-start gap-2">
+        </div>
+      </div>
+      <div class="relative flex items-center justify-center pt-2">
+        <input id="search" type="text" class="w-full rounded" placeholder="Filter elements">
+        <span id="clear-search" class="absolute right-2 cursor-pointer" title="Clear filter">
+          <svg class="w-6 h-6 text-gray-600" data-slot="icon" aria-hidden="true" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+      </div>
     </div>
   </div>
+  <% if current_user.present? %>
+    <span class="absolute bottom-2 left-2 select-none text-sm text-gray-600">
+      Signed in as <%= current_user.name %>
+      -
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form_class: "inline", class: "underline" %>
+    </span>
+  <% end %>
 </div>
 
 <script type="module">
@@ -25,8 +34,14 @@
   let playspace = document.getElementById("playspace")
   let inventory = document.getElementById("inventory")
   let search = document.getElementById("search")
+  let clearSearch = document.getElementById("clear-search")
   let trash = document.getElementById("trash")
+  let dropzone = document.getElementById("dropzone")
   let elements = <%== Element.default_list %>
 
-  let game = new Craftology({playspace: playspace, library: inventory, trash: trash, elements: elements, search: search})
+  let game = new Craftology({
+    playspace: playspace, library: inventory,
+    trash: trash, elements: elements, search: search,
+    dropzone: dropzone, clearSearch: clearSearch
+  })
 </script>

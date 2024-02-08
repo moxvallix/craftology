@@ -1,6 +1,31 @@
+html {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+body {
+  overflow: auto;
+  height: 100%;
+  position: relative;
+}
+
 .heartbeat {
 	-webkit-animation: heartbeat 1.5s ease-in-out infinite both;
 	        animation: heartbeat 1.5s ease-in-out infinite both;
+}
+
+.bg-pan-gradient {
+	-webkit-animation: bg-pan-gradient 18s ease infinite;
+	        animation: bg-pan-gradient 18s ease infinite;
+}
+
+.site-bg {
+  background: linear-gradient(270deg, #fdc5f5, #f7aef8, #b388eb, #8093f1, #72ddf7);
+  background-size: 1000% 1000%;
+
+  animation: bg-pan-bg-gradient 51s ease infinite;
 }
 
 /* ----------------------------------------------
@@ -82,4 +107,17 @@
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
   }
+}
+
+/* https://www.gradient-animator.com/ */
+@keyframes bg-pan-gradient {
+  0%{background-position:0% 96%}
+  50%{background-position:100% 5%}
+  100%{background-position:0% 96%}
+}
+
+@keyframes bg-pan-bg-gradient {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }

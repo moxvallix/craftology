@@ -1,5 +1,5 @@
 import van from "https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.2.8.min.js"
-const {div, span, input} = van.tags
+const {div, span} = van.tags
 
 export class Craftology {
   constructor(params = {}) {
@@ -7,6 +7,8 @@ export class Craftology {
     this.library = params.library
     this.trash = params.trash
     this.search = params.search
+    this.clearSearch = params.clearSearch
+    this.dropzone = params.dropzone
     this.elements = params.elements || []
     this.claimID = this.getClaimID()
     this.selectedElements = []
@@ -26,9 +28,9 @@ export class Craftology {
     }
 
     // Drag and Drop for Playspace
-    this.playspace.addEventListener("dragover", event => event.preventDefault())
-    this.playspace.addEventListener("drop", event => this.handlePlayspaceDrop(event, this))
-    this.playspace.addEventListener("click", event => {
+    this.dropzone.addEventListener("dragover", event => event.preventDefault())
+    this.dropzone.addEventListener("drop", event => this.handlePlayspaceDrop(event))
+    this.dropzone.addEventListener("click", event => {
       if (this.selectedElements.length <= 0 || this.selectedElementsData.length <= 0) { return }
       let element = this.selectedElements[0]
       let data = this.selectedElementsData[0]
@@ -37,33 +39,18 @@ export class Craftology {
 
       if (element.dataset.type === "library") {
         element = this.playspaceElement(data)
-        this.playspace.append(element)
+        this.addToPlayspace(element)
       }
-      
-      let rect = element.getBoundingClientRect()
-      let xPos = event.offsetX - (rect.width / 2)
-      let yPos = event.offsetY - (rect.height / 2)
-
-      element.style.top = `${yPos}px`
-      element.style.left = `${xPos}px`
 
       this.handleElementsDeselect()
     })
-    this.playspace.style.position = "relative"
-    this.playspace.style.overflow = "clip"
 
     // Drag and Drop for Library
     this.trash.addEventListener("dragover", event => event.preventDefault())
-    this.trash.addEventListener("drop", event => this.handleLibraryDrop(event))
+    this.trash.addEventListener("drop", event => this.handleTrashDrop(event))
 
-    this.playspace.insertBefore(
-      div(
-        {id: "element-curtain", class: "relative overflow-hidden"}
-      ), this.playspace.firstChild
-    )
-
-    this.playspace.append(this.trashIcon())
-    this.setupSearch(this.search)
+    this.dropzone.append(this.trashIcon())
+    this.setupSearch(this.search, this.clearSearch)
 
     document.addEventListener("keydown", event => {
       const re = new RegExp("^[a-z0-9]$", "i")
@@ -103,13 +90,14 @@ export class Craftology {
 
     output.addEventListener("drop", event => {
       event.stopPropagation()
+      this.handleTrashDrop(event)
       output.classList.add("border", "border-gray-400")
       output.classList.remove("border-2", "border-red-400")
     })
 
     output.addEventListener("click", event => {
       event.stopPropagation()
-      if (event.shiftKey) {
+      if (event.ctrlKey || event.shiftKey) {
         return this.wipeBoard()
       }
       this.selectedElements.forEach(element => {
@@ -120,15 +108,30 @@ export class Craftology {
       this.handleElementsDeselect()
     })
 
+    output.addEventListener("mousedown", event => {
+      if (event.button === 1) {
+        this.wipeBoard()
+      }
+    })
+
     output.addEventListener("dblclick", this.wipeBoard)
 
     return output
   }
 
-  setupSearch(search) {
+  setupSearch(search, clear) {
     search.addEventListener("input", event => {
-      console.log(event)
       this.filterLibrary(event.target.value)
+    })
+    clear.addEventListener("click", () => {
+      search.value = ""
+      this.filterLibrary("")
+    })
+    document.addEventListener("keydown", event => {
+      if (event.key == "Escape") {
+        search.value = ""
+        this.filterLibrary("")
+      }
     })
   }
 
@@ -143,12 +146,15 @@ export class Craftology {
   elementIcon(data) {
     return div(
       {
-        class: "flex justify-center rounded-lg border border-gray-400 p-2 select-none cursor-pointer bg-white text-nowrap whitespace-nowrap",
+        class: "flex justify-center rounded-lg border border-gray-400 bg-white select-none cursor-pointer text-nowrap whitespace-nowrap overflow-clip",
         title: data.description, draggable: true,
         "data-type": data?.type, "data-name": data.name
       },
-      span({class: "pointer-events-none font-emoji"}, data.icon),
-      span({ class: "pointer-events-none ml-2 capitalize"}, data.name)
+      div(
+        {class: "p-2 pointer-events-none"},
+        span({class: "pointer-events-none font-emoji"}, data.icon),
+        span({ class: "pointer-events-none ml-2 capitalize"}, data.name)
+      )
     )
   }
   
@@ -157,12 +163,15 @@ export class Craftology {
     data.type = "playspace"
     let output = this.elementIcon(data)
     output.id = data.id
-    output.style.position = "absolute"
 
     if (data?.discovered_by?.self) {
-      output.append(
-        span({class: "absolute mt-10 text-xs"}, "First Discovery!")
+      output.classList.remove("border-gray-400")
+      output.classList.add(
+        "border-transparent", "bg-rainbow", "bg-[length:2000%_2000%]", "bg-pan-gradient"
       )
+      output.setAttribute("title", "First Discovery!\n" + data.description)
+      let innerDiv = output.firstChild
+      innerDiv.classList.add("bg-white")
     }
   
     output.addEventListener("dragstart", event => {
@@ -186,10 +195,16 @@ export class Craftology {
       output.classList.remove("border-2", "border-emerald-400")
     })
 
+    output.addEventListener("mousedown", event => {
+      if (event.button === 1) {
+        output.remove()
+      }
+    })
+
     output.addEventListener("drop", event => {
       event.stopPropagation()
       let targetData = JSON.parse(event.dataTransfer.getData('text/plain'))
-      this.combineElements(output.getBoundingClientRect(), data.name, targetData.name)
+      this.combineElements(event.target, data.name, targetData.name)
   
       let target = document.getElementById(targetData.id)
       if (data.type === "playspace" && target) {
@@ -197,11 +212,6 @@ export class Craftology {
       }
       event.target.remove()
   
-    })
-  
-    output.addEventListener("dragend", event => {
-      if (event.ctrlKey || event.shiftKey) { return }
-      output.remove()
     })
 
     output.addEventListener("click", event => {this.handleElementSelect(event, data)})
@@ -222,10 +232,22 @@ export class Craftology {
       event.dataTransfer.dropEffect = "copy"
     })
 
-    output.addEventListener("click", event => {this.handleElementSelect(event, data)})
-    output.addEventListener("dblclick", event => {
-      let rect = this.randomPlayspaceRect()
-      this.addToPlayspace(rect, data)
+    output.addEventListener("click", event => {
+      if (event.ctrlKey || event.shiftKey) {
+        let newData = Object.assign({}, data);
+        return this.addToPlayspace(this.playspaceElement(newData))
+      }
+      this.handleElementSelect(event, data)
+    })
+    output.addEventListener("mousedown", event => {
+      if (event.button === 1) {
+        let newData = Object.assign({}, data);
+        this.addToPlayspace(this.playspaceElement(newData))
+      }
+    })
+    output.addEventListener("dblclick", () => {
+      let newData = Object.assign({}, data);
+      this.addToPlayspace(this.playspaceElement(newData))
       this.handleElementsDeselect()
     })
   
@@ -255,8 +277,7 @@ export class Craftology {
         }
       })
 
-      if (playspaceElement) { rect = playspaceElement.getBoundingClientRect() }
-      this.combineElements(rect, this.selectedElements[0].dataset.name, this.selectedElements[1].dataset.name)
+      this.combineElements(playspaceElement, this.selectedElements[0].dataset.name, this.selectedElements[1].dataset.name)
 
       this.selectedElements.forEach(element => {
         if (element.dataset.type === "playspace") {
@@ -289,53 +310,51 @@ export class Craftology {
   handlePlayspaceDrop(event) {
     event.preventDefault()
     let data = JSON.parse(event.dataTransfer.getData('text/plain'))
-    if (data.type === "library" || data.type === "playspace") {
-      let element = this.playspaceElement(data)
-      element.style.top = `${event.offsetY - data.offset.y}px`
-      element.style.left = `${event.offsetX - data.offset.x}px`
-      van.add(this.playspace, element)
+    if (data.type === "library" || (data.type === "playspace" && event.ctrlKey || event.shiftKey) ) {
+      this.addToPlayspace(this.playspaceElement(data))
     }
   }
   
-  handleLibraryDrop(event) {
+  handleTrashDrop(event) {
     event.preventDefault()
     let data = JSON.parse(event.dataTransfer.getData('text/plain'))
     if (data.type === "playspace") {
-      delete document.getElementById(data.id)
+      document.getElementById(data.id).remove()
     }
   }
   
-  combineElements(rect, left, right) {
+  combineElements(target, left, right) {
     let pending = this.elementIcon({name: "Crafting...", icon: "⌛", description: "Crafting in progress..."})
     pending.removeAttribute("draggable")
     pending.style.display = "none"
-    pending.style.position = "absolute"
-    pending.style.top = `${rect.top}px`
-    pending.style.left = `${rect.left}px`
     pending.classList.add("heartbeat", "cursor-default")
 
     setTimeout(() => {
       pending.style.display = ""
     }, 100)
 
-    this.playspace.append(pending)
+    this.addToPlayspace(pending, target)
   
     this.craftElement(left, right).then(data => {
+      this.addToPlayspace(this.playspaceElement(data), pending)
       pending.remove()
-      this.addToPlayspace(rect, data)
     })
   }
 
-  addToPlayspace(rect, data) {
-    let newElement = this.playspaceElement(data)
-    newElement.style.top = `${rect.top}px`
-    newElement.style.left = `${rect.left}px`
-    this.playspace.append(newElement)
-    return newElement
+  addToPlayspace(element, target = null) {
+    if (target != null && typeof target.insertAdjacentElement === "function") {
+      target.insertAdjacentElement('beforebegin', element)
+    } else {
+      this.playspace.append(element)
+    }
+    return element
   }
 
   addToLibrary(data) {
-    let newElement = this.libraryElement(data)
+    let newElement = this.libraryElement(Object.assign({}, data))
+    if (!checkFilter(this.search.value, data.name)) {
+      newElement.classList.add("hidden")
+    }
     this.library.append(newElement)
     return newElement
   }
@@ -353,14 +372,10 @@ export class Craftology {
   }
 
   filterLibrary(filter) {
-    const pattern = filter.split(" ").map(escapeRegExp).join(".*")
-    const re = new RegExp(pattern, "i")
     const children = Array.from(this.library.children)
 
     children.forEach(element => {
-      let match = element.dataset.name.match(re)
-      console.log(element.dataset.type)
-      if (match) {
+      if (checkFilter(filter, element.dataset.name)) {
         element.classList.remove("hidden")
       } else {
         element.classList.add("hidden")
@@ -415,6 +430,12 @@ function generateUUID() {
 
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+function checkFilter(filter, input) {
+  const pattern = filter.split(" ").map(escapeRegExp).join(".*")
+  const re = new RegExp(pattern, "i")
+  return !!input.match(re)
 }
 
 // https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex#6969486
