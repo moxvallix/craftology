@@ -1,7 +1,6 @@
 RECIPES = "db/seeds/fixtures/recipes.json".freeze
 
 JSON.parse(File.read(RECIPES)).each do |left_name, right_name, result|
-  puts result
   element = Element.find_by_name! result
   recipe = Recipe.craft(left_name, right_name).where(result: element).first
   next if recipe.present?
