@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  VALID_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -7,10 +9,14 @@ class User < ApplicationRecord
   has_many :discoveries
   has_many :discovery_recipes, through: :discoveries
   validates :name, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }
+
+  attribute :claim_id
   
   def claim(uuid)
+    return false unless uuid.to_s.match? VALID_UUID
     Element.unclaimed.uuid(uuid).update_all(discovered_by: self)
     Recipe.unclaimed.uuid(uuid).update_all(discovered_by: self)
+    true
   end
 
   def discover(recipe)

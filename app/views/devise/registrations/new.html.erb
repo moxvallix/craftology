@@ -27,6 +27,8 @@
         <%= f.password_field :password, autocomplete: "new-password", class: "rounded" %>
       </div>
 
+      <%= f.hidden_field :claim_id %>
+
       <div class="flex justify-center mt-4">
         <%= f.submit "Sign up", class: "px-4 py-2 rounded border cursor-pointer grow bg-gray-100" %>
       </div>
@@ -37,3 +39,7 @@
     <%= render "devise/shared/links" %>
   </div>
 </div>
+
+<script>
+  document.getElementById("user_claim_id").value = localStorage.getItem("craftology-claim-id")
+</script>
