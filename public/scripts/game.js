@@ -64,6 +64,13 @@ export class Craftology {
 
     this.playspace.append(this.trashIcon())
     this.setupSearch(this.search)
+
+    document.addEventListener("keydown", event => {
+      const re = new RegExp("^[a-z0-9]$", "i")
+      if (event.key.match(re)) {
+        this.search.focus()
+      }
+    })
   }
 
   getClaimID() {
