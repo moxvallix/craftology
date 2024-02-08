@@ -39,7 +39,7 @@ class CraftNewElementJob < ApplicationJob
 
   def set_recipe(recipe, data)
     params = {
-      name: data[:result].to_s.downcase.strip.squeeze(" "),
+      name: data[:result].to_s.tr("-", " ").downcase.strip.squeeze(" "),
       icon: data[:emoji].to_s[..2],
       description: data[:description],
       discovered_by: recipe.discovered_by,
@@ -94,7 +94,8 @@ class CraftNewElementJob < ApplicationJob
       top_k: 40,
       max_tokens: 350,
       repetition_penalty: 1.1,
-      prompt: prompt_text
+      prompt: prompt_text,
+      stop: "\n"
     }.to_json
     headers = {
       "Authorization" => "Bearer #{find_value_by_name("togetherai", "token")}",
@@ -104,6 +105,7 @@ class CraftNewElementJob < ApplicationJob
       URI(find_value_by_name("llm", "endpoint")), json, headers
     )
     response_json = JSON.parse(response.body)
+    Rails.logger.info(response_json)
     output = response_json.dig("output", "choices", 0, "text")
     process_response(output)
   end
