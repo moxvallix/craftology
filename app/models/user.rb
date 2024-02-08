@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  VALID_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+  VALID_UUID = /^[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+$/i
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -14,8 +14,8 @@ class User < ApplicationRecord
   
   def claim(uuid)
     return false unless uuid.to_s.match? VALID_UUID
-    Element.unclaimed.uuid(uuid).update_all(discovered_by: self)
-    Recipe.unclaimed.uuid(uuid).update_all(discovered_by: self)
+    Element.unclaimed.uuid(uuid).update_all(discovered_by_id: self.id)
+    Recipe.unclaimed.uuid(uuid).update_all(discovered_by_id: self.id)
     true
   end
 

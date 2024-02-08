@@ -11,7 +11,7 @@ class Recipe < ApplicationRecord
     .where(left_element: { name: left }, right_element: { name: right })
     .or(where(left_element: { name: right }, right_element: { name: left }))
   }
-  scope :uuid, ->(uuid) { where(uuid: uuid) }
+  scope :uuid, ->(uuid) { where(discovered_uuid: uuid) }
   scope :unclaimed, -> { where(discovered_by: nil) }
 
   def discoverer

@@ -3,7 +3,7 @@ class Element < ApplicationRecord
   has_many :recipes, foreign_key: "result_id"
 
   scope :default, -> { where(default: true) }
-  scope :uuid, ->(uuid) { where(uuid: uuid) }
+  scope :uuid, ->(uuid) { where(discovered_uuid: uuid) }
   scope :unclaimed, -> { where(discovered_by: nil) }
 
   def self.error
