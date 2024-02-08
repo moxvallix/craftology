@@ -1,25 +1,25 @@
 [
   [
     "error",
-    "The result of a failed experiment... Better luck next time!",
-    "🚫"
+    "🚫",
+    "The result of a failed experiment... Better luck next time!"
   ],
   [
     "earth",
-    "Earth is our planet. Home to many diverse life forms.",
     "🌏",
+    "Earth is our planet. Home to many diverse life forms.",
     true
   ],
   [
     "air",
-    "Essential atmospheric gas mixture comprising oxygen, nitrogen & trace elements, vital for respiration & sustaining life",
     "🍃",
+    "Essential atmospheric gas mixture comprising oxygen, nitrogen & trace elements, vital for respiration & sustaining life",
     true
   ],
   [
     "fire",
-    "Fire is an intense chemical reaction releasing heat, light, and often flames.",
     "🔥",
+    "Fire is an intense chemical reaction releasing heat, light, and often flames.",
     true
   ],
   [
@@ -30,50 +30,50 @@
   ],
   [
     "dirt",
-    "Dispersed soil particles mixed with organic matter typically resulting from erosion or human activity; commonly seen as unclean substance.",
-    "🪴"
+    "🪴",
+    "Dispersed soil particles mixed with organic matter typically resulting from erosion or human activity; commonly seen as unclean substance."
   ],
   [
     "atmosphere",
-    "The atmosphere is the gaseous layer surrounding Earth, comprising oxygen, nitrogen, water vapor & trace elements essential for life support.",
-    "🌃"
+    "🌃",
+    "The atmosphere is the gaseous layer surrounding Earth, comprising oxygen, nitrogen, water vapor & trace elements essential for life support."
   ],
   [
     "lava",
-    "Lava is molten rock erupting from volcanoes or fissures, typically very hot & destructive.",
-    "🔥"
+    "🔥",
+    "Lava is molten rock erupting from volcanoes or fissures, typically very hot & destructive."
   ],
   [
     "plant",
-    "A living organism rooted in soil, producing food via photosynthesis.",
-    "🌱"
+    "🌱",
+    "A living organism rooted in soil, producing food via photosynthesis."
   ],
   [
     "wind",
-    "Wind is the natural air current resulting from atmospheric pressure differences & horizontal movement of gases.",
-    "🍃"
+    "🍃",
+    "Wind is the natural air current resulting from atmospheric pressure differences & horizontal movement of gases."
   ],
   [
     "smoke",
-    "Visible airborne particulate matter created by burning or combustion.",
-    "💨"
+    "💨",
+    "Visible airborne particulate matter created by burning or combustion."
   ],
   [
     "cloud",
-    "Atmospheric water vapor condensation visible as a floating mass in the sky.",
-    "☁️"
+    "☁️",
+    "Atmospheric water vapor condensation visible as a floating mass in the sky."
   ],
   [
     "sky",
-    "The region of the atmosphere that is visible from the ground, extending from the horizon to outer space.",
-    "⛅"
+    "⛅",
+    "The region of the atmosphere that is visible from the ground, extending from the horizon to outer space."
   ],
   [
     "heat",
-    "Energy transferred due to temperature difference resulting in molecular vibration.",
-    "🔥"
+    "🔥",
+    "Energy transferred due to temperature difference resulting in molecular vibration."
   ],
-  ["steam", "Hot water vapor formed during heat conversion.", "♨"],
+  ["steam",  "♨", "Hot water vapor formed during heat conversion."],
   [
     "puddle",
     "💧",
