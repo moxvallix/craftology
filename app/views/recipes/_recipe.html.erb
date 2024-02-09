@@ -1,0 +1,10 @@
+<%
+  user ||= nil
+%>
+<div class="flex flex-wrap items-center gap-2 text-xs sm:text-base">
+  <%= render partial: "elements/element", locals: { element: recipe.result, user: user } %>
+  <strong class="text-base">=</strong>
+  <%= render partial: "elements/element", locals: { element: recipe.right_element, user: user } %>
+  <strong class="text-base">+</strong>
+  <%= render partial: "elements/element", locals: { element: recipe.left_element, user: user } %>
+</div>

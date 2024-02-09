@@ -1,13 +1,25 @@
 class Element < ApplicationRecord
   belongs_to :discovered_by, class_name: "User", optional: true
   has_many :recipes, foreign_key: "result_id"
+  has_many :discoveries
 
   scope :default, -> { where(default: true) }
   scope :uuid, ->(uuid) { where(discovered_uuid: uuid) }
   scope :unclaimed, -> { where(discovered_by: nil) }
 
+  scope :user_discovered, ->(user) {
+    joins(:discoveries).where(discovered_by: user).or(
+      joins(:discoveries).where(discoveries: { user: user })
+    )
+  }
+
   def self.error
     find_by_name("error")
+  end
+
+  def user_discovered?(user)
+    return true if default?
+    self.class.user_discovered(user).where(id: id).any?
   end
 
   def discoverer

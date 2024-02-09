@@ -3,15 +3,20 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   
+  has_many :elements, foreign_key: :discovered_by_id
   has_many :discoveries
   has_many :discovery_recipes, through: :discoveries
+
   validates :name, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }
 
   attribute :claim_id
-  
+
+  def discovered_elements
+    Element.user_discovered(self)
+  end
+
   def claim(uuid)
     return false unless uuid.to_s.match? VALID_UUID
     Element.unclaimed.uuid(uuid).update_all(discovered_by_id: self.id)
@@ -29,6 +34,10 @@ class User < ApplicationRecord
       create_recipe_discovery(discovery, recipe)
     end
     true
+  end
+
+  def to_param
+    name
   end
 
   private

@@ -1,0 +1,13 @@
+<nav class="p-4 rounded-lg bg-white shadow-lg underline space-x-4 max-w-screen-lg w-full">
+  <%= link_to "Sandbox", root_path %>
+  <% if current_user.present? %>
+    <%= link_to "My Profile", profile_path(current_user) %>
+  <% end %>
+  <div class="float-right">
+    <% if current_user.present? %>
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form_class: "inline", class: "underline" %>
+    <% else %>
+      <%= link_to "Sign In", new_user_session_path, class: "inline underline" %>
+    <% end %>
+  </div>
+</nav>

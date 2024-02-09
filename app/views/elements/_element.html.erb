@@ -1,0 +1,23 @@
+<%
+  user ||= nil
+  discovery = (element.discovered_by == user)
+  clickable = (element.user_discovered?(user))
+  classes ||= ""
+  classes << (discovery ? " border-transparent bg-rainbow bg-[length:2000%_100%] bg-pan-gradient" : " border-gray-400 bg-white")
+  id = "element_#{element.id}"
+%>
+<div
+  id="<%= id %>"
+  class="flex justify-center rounded-lg border text-nowrap whitespace-nowrap overflow-clip cursor-pointer <%= classes %>"
+  title="<%= element.description %>"
+  <% if clickable %>
+    onclick="window.location='<%= element_path(element) %>'"
+  <% end %>
+  >
+  <div class="p-2 bg-white">
+    <%= link_to (clickable ? element : nil) do %>
+      <span class="font-emoji"><%= element.icon %></span>
+      <span class="capitalize"><%= element.name %></span>
+    <% end %>
+  </div>
+</div>

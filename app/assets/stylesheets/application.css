@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+.site-bg {
+  background: linear-gradient(270deg, #fdc5f5, #f7aef8, #b388eb, #8093f1, #72ddf7);
+  background-size: 1000% 1000%;
+
+  animation: bg-pan-bg-gradient 51s ease infinite;
+}

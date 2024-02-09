@@ -1,0 +1,32 @@
+<%
+  owner = (current_user == @element.discovered_by)
+%>
+<div class="flex flex-col gap-2 grow items-center justify-start py-8 px-2">
+  <%= render partial: "shared/nav" %>
+  <div class="max-w-screen-lg min-h-64 w-full bg-white shadow-lg rounded-lg p-4">
+    <div class="flex flex-wrap content-start gap-2 items-center">
+      <h1 class="text-3xl sm:text-5xl">Element <%= @element.id %></h1>
+      <div class="text-xl sm:text-3xl w-min">
+        <%= render partial: "element", locals: { element: @element, user: current_user, classes: "border-2" } %>
+      </div>
+    </div>
+    <div class="text-lg">
+      <p><strong>First Crafted:</strong> <%= @element.created_at.strftime("%d %b, %Y") %></p>
+      <p><strong>Discovered By:</strong> <%= @element.discoverer %></p>
+      <p><%= @element.description %></p>
+    </div>
+    <% if @recipes.any? %>
+      <h2 class="text-xl sm:text-3xl mt-2">Recipes</h2>
+      <hr class="my-4">
+      <div data-controller="pagy-initializer" class="mb-2">
+        <%== pagy_nav_js(@pagy) %>
+        <noscript><%== pagy_nav(@pagy) %></noscript>
+      </div>
+      <div class="flex flex-col gap-2">
+        <% @recipes.each do |recipe| %>
+          <%= render partial: "recipes/recipe", locals: { recipe: recipe, user: current_user } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
