@@ -86,7 +86,7 @@ class CraftNewElementJob < ApplicationJob
     process_response(response_json["content"])
   end
 
-  def prompt_together_ai(prompt_text)
+  def prompt_together_ai(prompt_text, retries = 0)
     json = {
       model: "lmsys/vicuna-13b-v1.5",
       temperature: 0.8,
@@ -104,9 +104,15 @@ class CraftNewElementJob < ApplicationJob
     response = Net::HTTP.post(
       URI(find_value_by_name("llm", "endpoint")), json, headers
     )
-    response_json = JSON.parse(response.body)
-    Rails.logger.info(response_json)
-    output = response_json.dig("output", "choices", 0, "text")
-    process_response(output)
+    if response.is_a?(Net::HTTPTooManyRequests) && retries < 5
+      sleep 2
+      prompt_together_ai(prompt_text, retries + 1)
+    elsif response.is_a?(Net::HTTPOK)
+      response_json = JSON.parse(response.body)
+      output = response_json.dig("output", "choices", 0, "text")
+      process_response(output)
+    else
+      raise "Error with Together.ai API"
+    end
   end
 end
