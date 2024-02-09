@@ -222,6 +222,12 @@ export class Craftology {
   libraryElement(data) {
     data.type = "library"
     let output = this.elementIcon(data)
+
+    if (data?.discovered_by?.self) {
+      output.classList.remove("border-gray-400")
+      output.classList.add("border-[#ff8700]")
+      output.setAttribute("title", "First Discovery!\n" + data.description)
+    }
     
     output.addEventListener("dragstart", event => {
       let rect = output.getBoundingClientRect()
