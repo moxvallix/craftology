@@ -8,13 +8,18 @@ class User < ApplicationRecord
   has_many :elements, foreign_key: :discovered_by_id
   has_many :discoveries
   has_many :discovery_recipes, through: :discoveries
+  has_many :recipes, through: :discovery_recipes
 
   validates :name, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }
 
   attribute :claim_id
 
   def discovered_elements
-    Element.user_discovered(self)
+    Element.user_discovered(self).distinct
+  end
+
+  def recipes_for_element(element)
+    recipes.where(result: element)
   end
 
   def claim(uuid)

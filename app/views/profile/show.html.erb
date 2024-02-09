@@ -18,7 +18,7 @@
       </div>
       <div class="flex flex-wrap gap-2 mt-2">
         <% @discoveries.each do |element| %>
-          <%= render partial: "elements/element", locals: { element: element, user: @user } %>
+          <%= render partial: "elements/element", locals: { element: element, user: @user, current_user: current_user } %>
         <% end %>
       </div>
     </div>

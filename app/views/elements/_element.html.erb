@@ -1,23 +1,23 @@
 <%
   user ||= nil
+  current_user ||= user
   discovery = (element.discovered_by == user)
-  clickable = (element.user_discovered?(user))
+  clickable = (element.user_discovered?(current_user))
   classes ||= ""
+  classes << " cursor-pointer" if clickable
   classes << (discovery ? " border-transparent bg-rainbow bg-[length:2000%_100%] bg-pan-gradient" : " border-gray-400 bg-white")
   id = "element_#{element.id}"
 %>
 <div
   id="<%= id %>"
-  class="flex justify-center rounded-lg border text-nowrap whitespace-nowrap overflow-clip cursor-pointer <%= classes %>"
+  class="flex justify-center rounded-lg border text-nowrap whitespace-nowrap overflow-clip <%= classes %>"
   title="<%= element.description %>"
-  <% if clickable %>
-    onclick="window.location='<%= element_path(element) %>'"
-  <% end %>
   >
-  <div class="p-2 bg-white">
-    <%= link_to (clickable ? element : nil) do %>
-      <span class="font-emoji"><%= element.icon %></span>
-      <span class="capitalize"><%= element.name %></span>
+  <% if clickable %>
+    <%= link_to element do %>
+      <%= render partial: "elements/element_inner", locals: { element: element } %>
     <% end %>
-  </div>
+  <% else %>
+    <%= render partial: "elements/element_inner", locals: { element: element, classes: "text-gray-600" } %>
+  <% end %>
 </div>

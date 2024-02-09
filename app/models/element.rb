@@ -8,8 +8,8 @@ class Element < ApplicationRecord
   scope :unclaimed, -> { where(discovered_by: nil) }
 
   scope :user_discovered, ->(user) {
-    joins(:discoveries).where(discovered_by: user).or(
-      joins(:discoveries).where(discoveries: { user: user })
+    includes(:discoveries).where(discovered_by: user).or(
+      includes(:discoveries).where(discoveries: { user: user })
     )
   }
 
@@ -19,6 +19,7 @@ class Element < ApplicationRecord
 
   def user_discovered?(user)
     return true if default?
+    return false unless user.present?
     self.class.user_discovered(user).where(id: id).any?
   end
 

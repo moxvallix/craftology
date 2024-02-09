@@ -4,7 +4,7 @@ class ElementsController < ApplicationController
   before_action :check_user_discovered
 
   def show
-    @pagy, @recipes = pagy(@element.recipes, items: 5)
+    @pagy, @recipes = pagy(current_user.recipes_for_element(@element), items: 5)
   end
 
   private
