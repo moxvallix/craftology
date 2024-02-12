@@ -13,6 +13,12 @@ class Element < ApplicationRecord
     )
   }
 
+  scope :lookup, ->(search) {
+    name_search = search.to_s.gsub(/[^ A-Za-z0-9]/, "")
+    name_search.squeeze!(" ")
+    where('LOWER(name) LIKE LOWER(?)', "%#{name_search.split(" ").join("%%")}%")
+  }
+
   def self.error
     find_by_name("error")
   end

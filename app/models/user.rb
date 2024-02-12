@@ -14,8 +14,8 @@ class User < ApplicationRecord
 
   attribute :claim_id
 
-  def discovered_elements
-    Element.user_discovered(self).distinct
+  def discovered_elements(filter = "")
+    Element.user_discovered(self).lookup(filter.to_s).distinct
   end
 
   def recipes_for_element(element)
