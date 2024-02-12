@@ -1,10 +1,10 @@
 class ElementsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_element
-  before_action :check_user_discovered
 
   def show
-    @pagy, @recipes = pagy(current_user.recipes_for_element(@element), items: 5)
+    if current_user.present?
+      @pagy, @recipes = pagy(current_user.recipes_for_element(@element), items: 5)
+    end
   end
 
   private
@@ -13,11 +13,6 @@ class ElementsController < ApplicationController
     @element = Element.find(params[:element_id] || params[:id])
 
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path
-  end
-
-  def check_user_discovered
-    return true if @element.user_discovered?(current_user)
     redirect_to root_path
   end
 end

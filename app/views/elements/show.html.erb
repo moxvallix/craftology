@@ -12,10 +12,17 @@
     </div>
     <div class="text-lg">
       <p><strong>First Crafted:</strong> <%= @element.created_at.strftime("%d %b, %Y") %></p>
-      <p><strong>Discovered By:</strong> <%= @element.discoverer %></p>
+      <p>
+        <strong>Discovered By:</strong>
+        <% if @element.discovered_by.present? %>
+          <%= link_to @element.discoverer, profile_path(@element.discovered_by), class: "underline" %>
+        <% else %>
+          <%= @element.discoverer %>
+        <% end %>
+      </p>
       <p><%= @element.description %></p>
     </div>
-    <% if @recipes.any? %>
+    <% if !@recipes.nil? && @recipes.any? %>
       <h2 class="text-xl sm:text-3xl mt-2">Recipes</h2>
       <hr class="my-4">
       <div data-controller="pagy-initializer" class="mb-2">
