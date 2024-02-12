@@ -20,6 +20,11 @@
               <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </span>
+          <noscript>
+            <div class="mr-2">
+              <%= form.submit "Go", class: "absolute underline top-2 pl-2 cursor-pointer" %>
+            </div>
+          </noscript>
         </div>
       <% end %>
       <%= turbo_frame_tag "elements" do %>
