@@ -1,6 +1,9 @@
 <div class="flex flex-col justify-start items-center max-h-screen grow">
-  <div class="hidden lg:flex items-center justify-center w-full px-4 mt-8">
+  <div class="hidden lg:flex items-center justify-center w-full mx-4 mt-8">
     <%= render partial: "shared/nav" %>
+  </div>
+  <div class="flex lg:hidden items-center justify-center absolute top-2 right-2 z-10">
+    <%= render partial: "shared/nav_mobile" %>
   </div>
   <div class="flex flex-col max-w-screen-lg w-full max-h-screen lg:max-h-[800px] h-full grow lg:rounded-lg lg:shadow-lg overflow-auto lg:m-4 lg:mt-2">
     <div id="dropzone" class="relative flex flex-col grow bg-gray-200 h-full">

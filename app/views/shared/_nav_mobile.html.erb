@@ -1,0 +1,27 @@
+<details class="relative group">
+  <summary class="absolute top-0 right-0 list-none group-open:p-2 cursor-pointer">
+    <div class="group-open:hidden p-1 bg-white shadow-lg rounded mt-1 mr-1">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+      </svg>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden h-6 w-6 group-open:block" x-show="menu">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+    </svg> 
+  </summary>
+  <nav class="flex flex-col gap-1 pt-2 p-4 pr-12 rounded-lg bg-white shadow-lg underline">
+    <%= link_to "Sandbox", root_path %>
+    <% if current_user.present? %>
+      <%= link_to "My Profile", profile_path(current_user), class: "block" %>
+    <% end %>
+    <div class="h-2 flex items-center justify-center">
+      <hr class="absolute right-4 left-4">
+    </div>
+    <% if current_user.present? %>
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "block" %>
+    <% else %>
+      <%= link_to "Sign In", new_user_session_path, class: "block" %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "block" %>
+    <% end %>
+  </nav>
+</details>
