@@ -184,5 +184,6 @@
   ["air", "car", "plane"],
   ["boat", "fire", "hot air balloon"],
   ["iron", "gold", "silver"],
-  ["iron", "silver", "copper"]
+  ["iron", "silver", "copper"],
+  ["copper", "golem", "golemscript"]
 ]
