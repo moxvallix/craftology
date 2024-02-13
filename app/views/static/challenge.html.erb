@@ -8,6 +8,18 @@
   <div class="flex flex-col max-w-screen-lg w-full max-h-screen lg:max-h-[800px] h-full grow lg:rounded-lg lg:shadow-lg overflow-auto lg:m-4 lg:mt-2">
     <div id="dropzone" class="relative flex flex-col grow bg-gray-200 h-full">
       <h1 id="title" class="text-2xl p-2 select-none">Craftology</h1>
+      <div id="objectives" class="absolute top-2 right-2">
+        <details open class="bg-white rounded p-2 shadow-lg">
+          <summary class="select-none cursor-pointer font-bold">
+            Current Objective
+          </summary>
+          <ol class="list-inside list-decimal space-y-2">
+            <li>Find <span id="emoji-target" class="p-1 border border-gray-400 bg-white rounded"></span></li>
+            <li>Craft <%= render partial: "elements/icon", locals: { id: "word-target", classes: "inline" } %></li>
+          </ol>
+          <button class="mt-2 underline text-sm" onclick="resetChallenge()">New Objective</button>
+        </details>
+      </div>
       <div id="playspace" class="p-2 flex items-start justify-start flex-wrap gap-2 overflow-auto grow shrink basis-0 content-start min-h-24">
       </div>
     </div>
@@ -36,11 +48,25 @@
   let clearSearch = document.getElementById("clear-search")
   let trash = document.getElementById("trash")
   let dropzone = document.getElementById("dropzone")
-  let elements = <%== Element.default_list %>
+  let elements = <%== @start %>
+
+  let emojiIcon = document.getElementById("emoji-target")
+  let wordIcon = document.getElementById("word-target")
 
   let game = new Craftology({
     playspace: playspace, library: inventory,
     trash: trash, elements: elements, search: search,
-    dropzone: dropzone, clearSearch: clearSearch, save: 'craftology-elements'
+    dropzone: dropzone, clearSearch: clearSearch, save: 'craftology-challenge',
+    metadata: {emoji: '<%= @emoji_target.icon[0] %>', word: {icon: '<%= @word_target.icon[0] %>', name: '<%= @word_target.name %>'}}
   })
+
+  emojiIcon.innerText = game.elements.metadata.emoji
+  wordIcon.querySelector('.element-icon').innerText = game.elements.metadata.word.icon
+  wordIcon.querySelector('.element-name').innerText = game.elements.metadata.word.name
+</script>
+<script>
+  function resetChallenge() {
+    localStorage.removeItem('craftology-challenge')
+    window.location.reload()
+  }
 </script>

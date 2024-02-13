@@ -1,6 +1,6 @@
 <%
   user ||= nil
-  discovery = (element.discovered_by == user)
+  discovery = (element.discovered_by == user && user.present?)
   classes ||= ""
   classes << (discovery ? " border-transparent bg-rainbow bg-[length:2000%_100%] bg-pan-gradient" : " border-gray-400 bg-white")
   id = "element_#{element.id}"

@@ -1,0 +1,13 @@
+<%
+  id ||= nil
+  classes ||= ""
+  element ||= nil
+%>
+<div
+  id="<%= id %>"
+  class="rounded-lg border border-gray-400 text-nowrap whitespace-nowrap overflow-clip p-1 bg-white select-none <%= classes %>"
+  title="<%= element&.description %>"
+  >
+  <span class="element-icon font-emoji"><%= element&.icon %></span>
+  <span class="element-name capitalize"><%= element&.name %></span>
+</div>

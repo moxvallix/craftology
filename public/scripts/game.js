@@ -1,5 +1,6 @@
 import van from "https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.2.8.min.js"
 const {div, span} = van.tags
+const version = 1
 
 export class Craftology {
   constructor(params = {}) {
@@ -9,21 +10,29 @@ export class Craftology {
     this.search = params.search
     this.clearSearch = params.clearSearch
     this.dropzone = params.dropzone
-    this.elements = params.elements || []
+    this.elements = {metadata: {version: version, ...params.metadata}, list: params.elements || []}
     this.claimID = this.getClaimID()
     this.selectedElements = []
     this.selectedElementsData = []
+    this.save = params.save
     
-    let elementJson = localStorage.getItem("craftology-elements")
-    if (elementJson) {
+    let elementJson = localStorage.getItem(this.save)
+    if (elementJson && this.save) {
       try {
         let savedElements = JSON.parse(elementJson)
-        this.elements = savedElements
+        if (!savedElements.metadata) {
+          this.elements = {
+            metadata: {version: version},
+            list: savedElements
+          }
+        } else {
+          this.elements = savedElements
+        }
       } catch {}
     }
 
-    for (const index in this.elements) {
-      const element = this.elements[index]
+    for (const index in this.elements.list) {
+      const element = this.elements.list[index]
       this.addToLibrary(element)
     }
 
@@ -370,12 +379,14 @@ export class Craftology {
 
   saveElement(data) {
     let hasElement = false
-    this.elements.forEach(e => {
+    this.elements.list.forEach(e => {
       if (e.name === data.name) { return hasElement = true }
     })
     if (!hasElement) {
-      this.elements.push(data)
-      localStorage.setItem("craftology-elements", JSON.stringify(this.elements))
+      this.elements.list.push(data)
+      if (this.save) {
+        localStorage.setItem(this.save, JSON.stringify(this.elements))
+      }
       this.addToLibrary(data)
     }
   }

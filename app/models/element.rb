@@ -13,6 +13,8 @@ class Element < ApplicationRecord
     )
   }
 
+  scope :order_random, -> { order('RANDOM()') }
+
   scope :lookup, ->(search) {
     name_search = search.to_s.gsub(/[^ A-Za-z0-9]/, "")
     name_search.squeeze!(" ")
@@ -20,7 +22,17 @@ class Element < ApplicationRecord
   }
 
   def self.error
-    find_by_name("error")
+    find_by_name("error") || Element.new(name: "error", icon: "🚫", description: "Error.")
+  end
+
+  def self.random
+    order('RANDOM()').first
+  end
+
+  def self.default_list(list = default)
+    out = "["
+    list.map { |e| out << e.to_json.gsub(/^"|"$/, "") + ", " }
+    out.delete_suffix(", ") + "]"
   end
 
   def user_discovered?(user)
@@ -32,12 +44,6 @@ class Element < ApplicationRecord
   def discoverer
     return discovered_by.name if discovered_by.present?
     "Anonymous"
-  end
-
-  def self.default_list
-    out = "["
-    default.map { |e| out << e.to_json.gsub(/^"|"$/, "") + ", " }
-    out.delete_suffix(", ") + "]"
   end
 
   def to_builder
