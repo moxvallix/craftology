@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html class="h-full site-bg">
+<html class="h-full bg-[#8093f1]">
   <head>
     <title>Craftology</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="utf-8">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -21,7 +21,7 @@
     <%= yield(:scripts) if content_for?(:scripts) %>
   </head>
 
-  <body class="h-full">
+  <body class="h-full site-bg">
     <main class="flex flex-col h-full">
       <% render partial: "shared/flash" %>
 
