@@ -1,19 +1,6 @@
 <nav class="p-4 rounded-lg bg-white shadow-lg underline space-x-4 max-w-screen-lg w-full">
-  <%= link_to "Sandbox", root_path %>
-  <%= link_to "Challenge", challenge_path %>
-  <%= link_to "Leaderboard", leaderboard_path %>
-  <% if current_user.present? %>
-    <%= link_to "My Profile", profile_path(current_user) %>
-  <% end %>
+  <%= render partial: "shared/nav_left" %>
   <div class="float-right">
-    <% if current_user.present? %>
-      <% if current_user.admin? %>
-        <%= link_to "Admin", admin_root_path, class: "inline underline" %>
-      <% end %>
-      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form_class: "inline", class: "underline" %>
-    <% else %>
-      <%= link_to "Sign In", new_user_session_path, class: "inline underline" %>
-      <%= link_to "Sign Up", new_user_registration_path, class: "inline underline" %>
-    <% end %>
+    <%= render partial: "shared/nav_right" %>
   </div>
 </nav>

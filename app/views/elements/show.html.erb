@@ -2,7 +2,12 @@
   owner = (current_user == @element.discovered_by)
 %>
 <div class="flex flex-col gap-2 grow items-center justify-start py-2 lg:py-8 px-2">
-  <%= render partial: "shared/nav" %>
+  <div class="w-full max-w-screen-lg hidden sm:block">
+    <%= render partial: "shared/nav" %>
+  </div>
+  <div class="absolute top-2 right-2 z-10 sm:hidden">
+    <%= render partial: "shared/nav_mobile" %>
+  </div>
   <div class="max-w-screen-lg min-h-64 w-full bg-white shadow-lg rounded-lg p-4">
     <div class="flex flex-wrap content-start gap-2 items-center">
       <h1 class="text-3xl sm:text-5xl">Element <%= @element.id %></h1>

@@ -10,23 +10,10 @@
     </svg> 
   </summary>
   <nav class="flex flex-col gap-1 pt-2 p-4 pr-12 rounded-lg bg-white shadow-lg underline">
-    <%= link_to "Sandbox", root_path %>
-    <%= link_to "Challenge", challenge_path %>
-    <%= link_to "Leaderboard", leaderboard_path %>
-    <% if current_user.present? %>
-      <%= link_to "My Profile", profile_path(current_user), class: "block" %>
-    <% end %>
+    <%= render partial: "shared/nav_left" %>
     <div class="h-2 flex items-center justify-center">
       <hr class="absolute right-4 left-4">
     </div>
-    <% if current_user.present? %>
-      <% if current_user.admin? %>
-        <%= link_to "Admin", admin_root_path, class: "inline underline" %>
-      <% end %>
-      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "block" %>
-    <% else %>
-      <%= link_to "Sign In", new_user_session_path, class: "block" %>
-      <%= link_to "Sign Up", new_user_registration_path, class: "block" %>
-    <% end %>
+    <%= render partial: "shared/nav_right" %>
   </nav>
 </details>
