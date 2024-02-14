@@ -1,0 +1,14 @@
+<%
+  classes ||= ""
+  rank = user.rank
+  medals = %w[🥇 🥈 🥉]
+%>
+<tr class="<%= classes %>">
+  <td class="p-2">
+    <%= link_to user.name, profile_path(user), class: "underline", data: { turbo: false } %>
+    <%= medals[rank - 1] %>
+  </td>
+  <td class="p-2"><%= user.discoveries.count %></td>
+  <td class="p-2"><%= user.elements.count %></td>
+  <td class="p-2"><%= rank %></td>
+</tr>

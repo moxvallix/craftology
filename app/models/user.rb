@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   VALID_UUID = /^[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+$/i
+  RANK_QUERY_SQLITE = 'SELECT "users"."id", row_number() OVER "win" \'rank\' FROM "users" INNER JOIN "discoveries" ON "discoveries"."user_id" = "users"."id" GROUP BY "users"."id" WINDOW "win" AS (ORDER BY COUNT("discoveries"."id") DESC)'.freeze
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -9,6 +10,13 @@ class User < ApplicationRecord
   has_many :discoveries
   has_many :discovery_recipes, through: :discoveries
   has_many :recipes, through: :discovery_recipes
+
+  scope :order_by_discovery_count, -> { joins(:discoveries).group(:id).order('COUNT(discoveries.id) DESC') }
+  scope :lookup, ->(search) {
+    name_search = search.to_s.gsub(/[^ A-Za-z0-9]/, "")
+    name_search.squeeze!(" ")
+    where('LOWER(name) LIKE LOWER(?)', "%#{name_search.split(" ").join("%%")}%")
+  }
 
   validates :name, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }
 
@@ -20,6 +28,12 @@ class User < ApplicationRecord
 
   def recipes_for_element(element)
     recipes.where(result: element)
+  end
+
+  def rank
+    query = User.find_by_sql(["SELECT \"rank\" FROM (#{RANK_QUERY_SQLITE}) WHERE id = ?", id])
+    return -1 unless query.first
+    query.first.read_attribute :rank
   end
 
   def claim(uuid)

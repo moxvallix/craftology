@@ -1,7 +1,10 @@
 class ProfileController < ApplicationController
   before_action :set_user, only: %i[show]
   rescue_from Pagy::OverflowError, with: :redirect_to_last_page
-  
+
+  def index
+    @pagy, @users = pagy(User.lookup(params[:filter]).order_by_discovery_count, items: 10)
+  end
 
   def show
     @pagy, @discoveries = pagy(@user.discovered_elements(params[:filter]), items: 45)

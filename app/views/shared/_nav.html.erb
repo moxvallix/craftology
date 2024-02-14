@@ -1,6 +1,7 @@
 <nav class="p-4 rounded-lg bg-white shadow-lg underline space-x-4 max-w-screen-lg w-full">
   <%= link_to "Sandbox", root_path %>
   <%= link_to "Challenge", challenge_path %>
+  <%= link_to "Leaderboard", leaderboard_path %>
   <% if current_user.present? %>
     <%= link_to "My Profile", profile_path(current_user) %>
   <% end %>

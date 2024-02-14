@@ -1,0 +1,41 @@
+<div class="flex flex-col grow gap-2 items-center justify-start py-2 lg:py-8 px-2">
+  <%= render partial: "shared/nav" %>
+  <div class="max-w-screen-lg min-h-64 w-full bg-white shadow-lg rounded-lg p-4">
+    <h1 class="text-3xl sm:text-5xl mb-2">Leaderboard</h1>
+    <%= form_with url: leaderboard_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "leaderboard" } do |form| %>
+      <div class="relative flex items-center justify-center max-w-lg">
+        <%= form.text_field :filter, value: params[:filter], placeholder: "Search users", class: "rounded w-full", data: { action: "input->search-form#search", search_form_target: "input" } %>
+        <span class="absolute right-2 cursor-pointer" title="Clear filter" data-action="click->search-form#clear">
+          <svg class="w-6 h-6 text-gray-600" data-slot="icon" aria-hidden="true" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <noscript>
+          <div class="mr-2">
+            <%= form.submit "Go", class: "absolute underline top-2 pl-2 cursor-pointer" %>
+          </div>
+        </noscript>
+      </div>
+    <% end %>
+    <%= turbo_frame_tag "leaderboard" do %>
+      <div data-controller="pagy-initializer" class="mt-2">
+        <%== pagy_nav_js(@pagy) %>
+        <noscript><%== pagy_nav(@pagy) %></noscript>
+      </div>
+      <table class="w-full">
+        <thead class="text-left">
+          <th>Name</th>
+          <th>Total Discoveries</th>
+          <th>First Discoveries</th>
+          <th>Rank</th>
+        </thead>
+        <tbody>
+          <% @users.each_with_index do |user, index| %>
+            <% classes = (index % 2 == 0 ? 'bg-gray-100' : 'bg-gray-200') %>
+            <%= render partial: "index", locals: { user: user, classes: classes } %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
