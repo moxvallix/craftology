@@ -21,6 +21,8 @@ class Element < ApplicationRecord
     where('LOWER(name) LIKE LOWER(?)', "%#{name_search.split(" ").join("%%")}%")
   }
 
+  validates :name, :icon, presence: true
+
   def self.error
     find_by_name("error") || Element.new(name: "error", icon: "🚫", description: "Error.")
   end

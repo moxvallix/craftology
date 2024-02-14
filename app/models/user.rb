@@ -20,7 +20,7 @@ class User < ApplicationRecord
     where('LOWER(name) LIKE LOWER(?)', "%#{name_search.split(" ").join("%%")}%")
   }
 
-  validates :name, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }
+  validates :name, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }, uniqueness: true
 
   attribute :claim_id
 

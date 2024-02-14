@@ -21,4 +21,17 @@ Rails.application.routes.draw do
     end
   end
 
+  authenticated :user, lambda { |u| u.admin? } do
+    namespace :admin do
+      resources :badges
+      resources :discoveries
+      resources :discovery_recipes
+      resources :elements
+      resources :recipes
+      resources :users
+      resources :user_badges
+
+      root to: "badges#index"
+    end
+  end
 end

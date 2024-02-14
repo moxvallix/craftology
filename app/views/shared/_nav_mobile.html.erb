@@ -20,6 +20,9 @@
       <hr class="absolute right-4 left-4">
     </div>
     <% if current_user.present? %>
+      <% if current_user.admin? %>
+        <%= link_to "Admin", admin_root_path, class: "inline underline" %>
+      <% end %>
       <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "block" %>
     <% else %>
       <%= link_to "Sign In", new_user_session_path, class: "block" %>
