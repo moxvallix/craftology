@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :discoveries
   has_many :discovery_recipes, through: :discoveries
   has_many :recipes, through: :discovery_recipes
+  has_many :user_badges
+  has_many :badges, through: :user_badges
 
   scope :order_by_discovery_count, -> { joins(:discoveries).group(:id).order('COUNT(discoveries.id) DESC') }
   scope :lookup, ->(search) {

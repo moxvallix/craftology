@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_06_145127) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_14_124103) do
+  create_table "badges", force: :cascade do |t|
+    t.string "name"
+    t.string "icon"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "discoveries", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "element_id", null: false
@@ -57,6 +65,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_145127) do
     t.index ["right_element_id"], name: "index_recipes_on_right_element_id"
   end
 
+  create_table "user_badges", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "badge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["badge_id"], name: "index_user_badges_on_badge_id"
+    t.index ["user_id"], name: "index_user_badges_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -79,4 +96,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_145127) do
   add_foreign_key "recipes", "elements", column: "result_id"
   add_foreign_key "recipes", "elements", column: "right_element_id"
   add_foreign_key "recipes", "users", column: "discovered_by_id"
+  add_foreign_key "user_badges", "badges"
+  add_foreign_key "user_badges", "users"
 end
