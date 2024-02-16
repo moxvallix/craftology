@@ -6,7 +6,8 @@
     <%= render partial: "shared/nav_mobile" %>
   </div>
   <div class="max-w-screen-lg min-h-64 w-full bg-white shadow-lg rounded-lg p-4">
-    <h1 class="text-3xl sm:text-5xl mb-2">Leaderboard</h1>
+    <h1 class="text-3xl sm:text-5xl">Leaderboard</h1>
+    <p class="mb-2">Total Elements Discovered: <%= Element.count %></p>
     <%= form_with url: leaderboard_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "leaderboard" } do |form| %>
       <div class="relative flex items-center justify-center max-w-lg">
         <%= form.text_field :filter, value: params[:filter], placeholder: "Search users", class: "rounded w-full", data: { action: "input->search-form#search", search_form_target: "input" } %>
